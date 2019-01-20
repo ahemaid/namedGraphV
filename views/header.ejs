@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <title>
+    <%- title %>
+  </title>
+  <link rel="stylesheet" href="../../highlight/styles/default.css">
+  <link href="../../dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css">
+  <link href="../../dist/vis-network.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../../javascripts/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../javascripts/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="../../stylesheets/bootstrap-treeview.min.css">
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/dataTables.min.css">
+  <link rel="stylesheet" href="../../javascripts/semanticUI/semantic.min.css">
+  <link rel="stylesheet" href="../../stylesheets/style.css">
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/yasqe.min.css">
+  <link href="../../stylesheets/mTab-style.css" type="text/css" rel="stylesheet" />
+  <script src="../../dist/vis.min.js"></script>
+  <script src="../../javascripts/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../../javascripts/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="../../javascripts/semanticUI/semantic.min.js"></script>
+  <script src="../../javascripts/jquery-mTab-min.js"></script>
+  <script src="../../javascripts/yasqe.bundled.js"></script>
+  <script src="../../javascripts/bootstrap-treeview.min.js"></script>
+  <script src="../../javascripts/lodash.js"></script>
+  <script type="text/javascript" src="../../javascripts/datatables.min.js"></script>
+  <script src="../../highlight/highlight.pack.js"></script>
+  <script src="../../javascripts/d3sparql/d3sparql.js"></script>
+  <script src="../../javascripts/d3sparql/queries.js"></script>
+  <script src="../../javascripts/d3sparql/lib/d3/d3.v3.min.js"></script>
+  <link href="../../javascripts/editor/css/codemirror.css" rel="stylesheet">
+  <link href="../../javascripts/editor/css/show-hint.css" rel="stylesheet">
+  <link href="../../javascripts/editor/css/main.css" rel="stylesheet">
+  <script src="../../javascripts/editor/js/lib/codemirror.js"></script>
+  <script src="../../javascripts/editor/js/logger.js"></script>
+
+
+  <!-- <script src="../../javascripts/editor/js/config.js" defer></script> -->
+  <!-- <script data-main="../../javascripts/editor/js/turtle-editor.js" src="../../javascripts/editor/js/lib/require.js" defer></script> -->
+  <script src="../../javascripts/editor/js/lib/github.js"></script>
+  <script src="../../javascripts/editor/mode/turtle/turtle.js"></script>
+  <script src="../../javascripts/editor/js/lib/n3-browser-slk.js"></script>
+  <script src="../../javascripts/editor/js/lib/underscore-min.js"></script>
+
+
+  <!-- mode: '../mode',
+  N3: 'lib/n3-browser-slk',
+  jquery: 'lib/jquery-2.1.3.min',
+  github: 'lib/github',
+  underscore: 'lib/underscore-min', -->
+
+</head>
+
+<body>
+  <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          <a class="navbar-brand" href="#">
+            <%= projectTitle %>
+          </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse in" aria-expanded="true" style="">
+          <ul id="leftHeaderUl" class="nav navbar-nav">
+
+            <li id="homeLi"><a id="homeAncor" href="./">Home</a></li>
+            <% if (userConfigurations[0] ) {%>
+            <li id="editingLi"><a id="editingAncor" href="">Editing</a></li>
+            <% } %>
+            <% if ( userConfigurations[1] ) {%>
+            <li id="documentationLi"><a id="documentationAncor" href="./documentation">Documentation</a></li>
+            <% } %>
+            <% if (userConfigurations[2]){ %>
+            <li id="visualizationLi"><a id="visualizationAncor" href="./visualization">Visualization</a></li>
+            <% } %>
+            <% if (userConfigurations[3] ) {%>
+            <li id="queryingLi"><a id="queryingAncor"  href="./querying">Querying</a></li>
+            <% } %>
+            <% if (userConfigurations[4] ) {%>
+            <li id="evolutionLi"><a id="evolutionAncor" href="./evolution">Evolution</a></li>
+            <% } %>
+            <% if (userConfigurations[5]) {%>
+            <li id="analyticsLi"><a id="analyticsAncor" href="./analytics">Analytics</a></li>
+            <% } %>
+            <li id="validationLi"><a id="validationAncor" href="./validation">Validation</a></li>
+            <!-- <li class="ui dropdown" style="padding-top: 1%">
+                <i class="dropdown icon"></i>
+                <div class="text">About</div>
+                <div class="menu">
+                  <div class="item" id="imprintLi"><a href="./Imprint">Imprint</a></div>
+                  <% if (userConfigurations[6]) {%>
+            <div class="item" id="dataProtectionLi"><a href="./dataProtection">Data Protection</a></div>
+            <% } %>
+        </div>
+      </li> -->
+
+            <!--Menu-->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      About
+                    </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" id="imprintAncor" href="#">Imprint</a>
+                <% if (userConfigurations[6]) {%>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" id="dataProtectionAncor" href="#">Data Protection</a>
+                <% } %>
+              </div>
+            </li>
+          </ul>
+          <ul id="rightNavbar" class="nav navbar-nav navbar-right">
+            <li>
+              <div class="field" style="padding-top: 15px;">
+                <select id="selectOntology" >
+                  <option value="">Branch</option>
+                  <option value="master">master</option>
+                  <option value="develop">develop</option>
+                </select>
+              </div>
+            </li>
+          </ul>
+          <!-- global replaceAll fuction to remove string from text of turtle code -->
+          <script>
+            // activate dropdown
+            // $('.ui.dropdown')
+            //   .dropdown();
+            // to replace in a string
+            String.prototype.replaceAll = function(search, replacement) {
+              var target = this;
+              return target.replace(new RegExp(search, 'g'), replacement);
+            };
+            //TODO: disable error showing for the meantime
+            // $.ajax({
+            //   url: "./checkErrors",
+            //   type: "GET",
+            //   dataType: 'text',
+            //   data: 'isExistSyntaxError=value',
+            //   success: function(value) {
+            //     if (value == "true") {
+            //       for (i = 0; i < 3; i++) {
+            //         setTimeout(function() {
+            //           $('#validationLi').transition('flash');
+            //           $("#validationLi").css({
+            //             "backgroundColor": "yellow"
+            //           });
+            //         }, 1000);
+            //       }
+            //       setTimeout(function() {
+            //         $("#validationLi").css({
+            //           "backgroundColor": "red"
+            //         });
+            //       }, 3000);
+            //     }
+            //   },
+            // });
+            var repoURL = <%- JSON.stringify(repositoryURL) %>;
+            var instacePath = <%- JSON.stringify(instacePath) %>;
+            var branchName = document.URL.substring(document.URL.lastIndexOf('/') + 1);
+            var instaceName = document.URL.split('/' + branchName)[0].substring(document.URL.split('/' + branchName)[0].lastIndexOf('/') + 1);
+            var currentTab = document.URL.split('/' + instaceName)[0].substring(document.URL.split('/' + instaceName)[0].lastIndexOf('/') + 1);
+
+            var currentURL = document.URL.split('/' + currentTab)[0];
+
+            //  console.log(instacePath+"kjjjjjjjjjjjj");
+            $("#homeAncor").attr("href", currentURL + '/home' + '/' + instaceName + '/' + branchName)
+            $("#editingAncor").attr("href", currentURL + '/editor' + '/' + instaceName + '/' + branchName)
+            $("#documentationAncor").attr("href", currentURL + '/documentation' + '/' + instaceName + '/' + branchName)
+            $("#visualizationAncor").attr("href", currentURL + '/visualization' + '/' + instaceName + '/' + branchName)
+            $("#queryingAncor").attr("href", currentURL + '/querying' + '/' + instaceName + '/' + branchName)
+            $("#evolutionAncor").attr("href", currentURL + '/evolution' + '/' + instaceName + '/' + branchName)
+            $("#analyticsAncor").attr("href", currentURL + '/analytics' + '/' + instaceName + '/' + branchName)
+            $("#validationAncor").attr("href", currentURL + '/validation' + '/' + instaceName + '/' + branchName)
+            $("#imprintAncor").attr("href", currentURL + '/Imprint' + '/' + instaceName + '/' + branchName)
+            $("#dataProtectionAncor").attr("href", currentURL + '/dataProtection' + '/' + instaceName + '/' + branchName)
+
+            // set selectOntologyDropdown  the selected currentBranch
+            $('select#selectOntology').val(branchName)
+
+
+
+            if (repoURL) {
+              $("#rightNavbar").show();
+              $('#rightNavbar').append($('<li><a href="' + repoURL + '"><i class="alternate github icon"></i> Repository</a></li>'));
+
+            }
+            $(function() {
+              $("#selectOntology").change(function() {
+                console.log($(this).val());
+                if ($(this).val()) {
+                  // change the path to the selected branch
+                  window.location.href = currentURL + '/' + currentTab + '/' + instaceName + '/' + $(this).val();
+                  // $("select#selectOntology").append($("<option>")
+                  //   .val("value")
+                  //   .html($(this).val())
+                  // );
+                }
+              });
+
+            });
+            // $('#selectOntology option').each(function() {
+            //   if (this.selected)
+            //   console.log(this);
+            // });
+            // $(window).on('load', function() {
+            //   $("#coverScreen").hide();
+            // });
+          </script>
+        </div>
+    </nav>
+    <div id="coverScreen" class="LockOn" style=" display: none;">
+    </div>

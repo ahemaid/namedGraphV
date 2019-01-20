@@ -1,0 +1,222 @@
+[
+  {
+    "object": "FuelStation",
+    "URI": "http://eccenca.com/mobivoc/FuelStation"
+  },
+  {
+    "object": "Autogas",
+    "URI": "http://eccenca.com/mobivoc/Autogas"
+  },
+  {
+    "object": "SuperDiesel",
+    "URI": "http://eccenca.com/mobivoc/SuperDiesel"
+  },
+  {
+    "object": "DieselFuel",
+    "URI": "http://eccenca.com/mobivoc/DieselFuel"
+  },
+  {
+    "object": "Ethanol",
+    "URI": "http://eccenca.com/mobivoc/Ethanol"
+  },
+  {
+    "object": "CompressedNaturalGas",
+    "URI": "http://eccenca.com/mobivoc/CompressedNaturalGas"
+  },
+  {
+    "object": "LKWDiesel",
+    "URI": "http://eccenca.com/mobivoc/LKWDiesel"
+  },
+  {
+    "object": "Super(E10)",
+    "URI": "http://eccenca.com/mobivoc/Super(E10)"
+  },
+  {
+    "object": "ExcelliumDiesel",
+    "URI": "http://eccenca.com/mobivoc/ExcelliumDiesel"
+  },
+  {
+    "object": "ExcelliumSuperPlus",
+    "URI": "http://eccenca.com/mobivoc/ExcelliumSuperPlus"
+  },
+  {
+    "object": "Biodiesel",
+    "URI": "http://eccenca.com/mobivoc/Biodiesel"
+  },
+  {
+    "object": "Super(E5)",
+    "URI": "http://eccenca.com/mobivoc/Super(E5)"
+  },
+  {
+    "object": "Methane",
+    "URI": "http://eccenca.com/mobivoc/Methane"
+  },
+  {
+    "object": "UltimateSuper",
+    "URI": "http://eccenca.com/mobivoc/UltimateSuper"
+  },
+  {
+    "object": "VPowerDiesel",
+    "URI": "http://eccenca.com/mobivoc/VPowerDiesel"
+  },
+  {
+    "object": "MaxxMotionDiesel",
+    "URI": "http://eccenca.com/mobivoc/MaxxMotionDiesel"
+  },
+  {
+    "object": "Hydrogen",
+    "URI": "http://eccenca.com/mobivoc/Hydrogen"
+  },
+  {
+    "object": "VPowerRacing",
+    "URI": "http://eccenca.com/mobivoc/VPowerRacing"
+  },
+  {
+    "object": "LiquidGas",
+    "URI": "http://eccenca.com/mobivoc/LiquidGas"
+  },
+  {
+    "object": "UltimateDiesel",
+    "URI": "http://eccenca.com/mobivoc/UltimateDiesel"
+  },
+  {
+    "object": "E85",
+    "URI": "http://eccenca.com/mobivoc/E85"
+  },
+  {
+    "object": "Petrol",
+    "URI": "http://eccenca.com/mobivoc/Petrol"
+  },
+  {
+    "object": "Adblue",
+    "URI": "http://eccenca.com/mobivoc/Adblue"
+  },
+  {
+    "object": "MaxxMotionSuper100",
+    "URI": "http://eccenca.com/mobivoc/MaxxMotionSuper100"
+  },
+  {
+    "object": "BibliographicResource",
+    "URI": "http://purl.org/dc/terms/BibliographicResource"
+  },
+  {
+    "object": "Book",
+    "URI": "http://purl.org/ontology/bibo/Book"
+  },
+  {
+    "object": "pA2067402x",
+    "URI": "http://lod.dbc.dk/id/870979/people/pA2067402x"
+  },
+  {
+    "object": "dan",
+    "URI": "http://lexvo.org/id/iso639-3/dan"
+  },
+  {
+    "object": "15_2",
+    "URI": "http://lod.dbc.dk/id/dk5/15_2"
+  },
+  {
+    "object": "r22455842ValbyBorgen1999",
+    "URI": "http://lod.dbc.dk/id/publicationevent/r22455842ValbyBorgen1999"
+  },
+  {
+    "object": "foaf:0.1Agent",
+    "URI": "http://xmlns.com/foaf/0.1Agent"
+  },
+  {
+    "object": "Agent",
+    "URI": "http://purl.org/dc/terms/Agent"
+  },
+  {
+    "object": "foaf:0.1Person",
+    "URI": "http://xmlns.com/foaf/0.1Person"
+  },
+  {
+    "object": "TopicDK5",
+    "URI": "http://lod.dbc.dk/schemas/dbc/TopicDK5"
+  },
+  {
+    "object": "Borgen",
+    "URI": "http://lod.dbc.dk/id/agent/Borgen"
+  },
+  {
+    "object": "2623032",
+    "URI": "http://sws.geonames.org/2623032"
+  },
+  {
+    "object": "Valby",
+    "URI": "http://lod.dbc.dk/id/place/Valby"
+  },
+  {
+    "object": "SpatialThing",
+    "URI": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing"
+  },
+  {
+    "object": "rdfs:Class",
+    "URI": "http://www.w3.org/2000/01/rdf-schema#Class"
+  },
+  {
+    "object": "owl:Class",
+    "URI": "http://www.w3.org/2002/07/owl#Class"
+  },
+  {
+    "object": "FillingStation",
+    "URI": "http://eccenca.com/mobivoc/FillingStation"
+  },
+  {
+    "object": "rdf:Property",
+    "URI": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+  },
+  {
+    "object": "owl:DatatypeProperty",
+    "URI": "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  },
+  {
+    "object": "ChargingStation",
+    "URI": "http://eccenca.com/mobivoc/ChargingStation"
+  },
+  {
+    "object": "rdfs:Literal",
+    "URI": "http://www.w3.org/2000/01/rdf-schema#Literal"
+  },
+  {
+    "object": "FuelStation",
+    "URI": "http://eccenca.com/mobivoc/FuelStation"
+  },
+  {
+    "object": "owl:ObjectProperty",
+    "URI": "http://www.w3.org/2002/07/owl#ObjectProperty"
+  },
+  {
+    "object": "Fuel",
+    "URI": "http://eccenca.com/mobivoc/Fuel"
+  },
+  {
+    "object": "rdfs:Class",
+    "URI": "http://www.w3.org/2000/01/rdf-schema#Class"
+  },
+  {
+    "object": "owl:Class",
+    "URI": "http://www.w3.org/2002/07/owl#Class"
+  },
+  {
+    "object": "LeadAcid",
+    "URI": "http://eccenca.com/mobivoc/LeadAcid"
+  },
+  {
+    "object": "Battery",
+    "URI": "http://eccenca.com/mobivoc/Battery"
+  },
+  {
+    "object": "rdf:Property",
+    "URI": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+  },
+  {
+    "object": "owl:DatatypeProperty",
+    "URI": "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  },
+  {
+    "object": "rdfs:Literal",
+    "URI": "http://www.w3.org/2000/01/rdf-schema#Literal"
+  }
+]

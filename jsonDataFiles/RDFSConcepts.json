@@ -1,0 +1,450 @@
+[
+  {
+    "parent": "",
+    "concept": "FillingStation",
+    "URI": "http://eccenca.com/mobivoc/FillingStation",
+    "RDFType": "rdfs:Class",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "FillingStation",
+    "URI": "http://eccenca.com/mobivoc/FillingStation",
+    "RDFType": "owl:Class",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "ChargingStationName",
+    "URI": "http://eccenca.com/mobivoc/ChargingStationName",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "fillingStationNumber",
+    "URI": "http://eccenca.com/mobivoc/fillingStationNumber",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "fillingStationHeight",
+    "URI": "http://eccenca.com/mobivoc/fillingStationHeight",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasIdentifications",
+    "URI": "http://eccenca.com/mobivoc/hasIdentifications",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasOffer",
+    "URI": "http://eccenca.com/mobivoc/hasOffer",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasParkingFacility",
+    "URI": "http://eccenca.com/mobivoc/hasParkingFacility",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasPrice",
+    "URI": "http://eccenca.com/mobivoc/hasPrice",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasShoppingFacility",
+    "URI": "http://eccenca.com/mobivoc/hasShoppingFacility",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasWashingFacility",
+    "URI": "http://eccenca.com/mobivoc/hasWashingFacility",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasWCFacility",
+    "URI": "http://eccenca.com/mobivoc/hasWCFacility",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasWheelChairEnabled",
+    "URI": "http://eccenca.com/mobivoc/hasWheelChairEnabled",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "offersAccess",
+    "URI": "http://eccenca.com/mobivoc/offersAccess",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "offersBooking",
+    "URI": "http://eccenca.com/mobivoc/offersBooking",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "offersPlugTypes",
+    "URI": "http://eccenca.com/mobivoc/offersPlugTypes",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "openingHours",
+    "URI": "http://eccenca.com/mobivoc/openingHours",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "PaymentMethod",
+    "URI": "http://eccenca.com/mobivoc/PaymentMethod",
+    "RDFType": "rdf:Property",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "ChargingStationName",
+    "URI": "http://eccenca.com/mobivoc/ChargingStationName",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "fillingStationNumber",
+    "URI": "http://eccenca.com/mobivoc/fillingStationNumber",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "fillingStationHeight",
+    "URI": "http://eccenca.com/mobivoc/fillingStationHeight",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasParkingFacility",
+    "URI": "http://eccenca.com/mobivoc/hasParkingFacility",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasPrice",
+    "URI": "http://eccenca.com/mobivoc/hasPrice",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasShoppingFacility",
+    "URI": "http://eccenca.com/mobivoc/hasShoppingFacility",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasWashingFacility",
+    "URI": "http://eccenca.com/mobivoc/hasWashingFacility",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasWCFacility",
+    "URI": "http://eccenca.com/mobivoc/hasWCFacility",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasWheelChairEnabled",
+    "URI": "http://eccenca.com/mobivoc/hasWheelChairEnabled",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "offersAccess",
+    "URI": "http://eccenca.com/mobivoc/offersAccess",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "offersBooking",
+    "URI": "http://eccenca.com/mobivoc/offersBooking",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "offersPlugTypes",
+    "URI": "http://eccenca.com/mobivoc/offersPlugTypes",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "openingHours",
+    "URI": "http://eccenca.com/mobivoc/openingHours",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "PaymentMethod",
+    "URI": "http://eccenca.com/mobivoc/PaymentMethod",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasIdentifications",
+    "URI": "http://eccenca.com/mobivoc/hasIdentifications",
+    "RDFType": "owl:ObjectProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasOffer",
+    "URI": "http://eccenca.com/mobivoc/hasOffer",
+    "RDFType": "owl:ObjectProperty",
+    "fileName": "FillingStation.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "ElectricVehicleBattery",
+    "URI": "http://eccenca.com/mobivoc/ElectricVehicleBattery",
+    "RDFType": "rdfs:Class",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "ElectricVehicleBattery",
+    "URI": "http://eccenca.com/mobivoc/ElectricVehicleBattery",
+    "RDFType": "owl:Class",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "Ampere",
+    "URI": "http://eccenca.com/mobivoc/Ampere",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasCapacity",
+    "URI": "http://eccenca.com/mobivoc/hasCapacity",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasCellVoltage",
+    "URI": "http://eccenca.com/mobivoc/hasCellVoltage",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasChargeTime",
+    "URI": "http://eccenca.com/mobivoc/hasChargeTime",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasCRate",
+    "URI": "http://eccenca.com/mobivoc/hasCRate",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasCycleLife",
+    "URI": "http://eccenca.com/mobivoc/hasCycleLife",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasOperatingTemperature",
+    "URI": "http://eccenca.com/mobivoc/hasOperatingTemperature",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasSelfDischarge",
+    "URI": "http://eccenca.com/mobivoc/hasSelfDischarge",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasSpecificEnergyDensity",
+    "URI": "http://eccenca.com/mobivoc/hasSpecificEnergyDensity",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasSpecificPower",
+    "URI": "http://eccenca.com/mobivoc/hasSpecificPower",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "Longevity",
+    "URI": "http://eccenca.com/mobivoc/Longevity",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "Performance",
+    "URI": "http://eccenca.com/mobivoc/Performance",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "Price",
+    "URI": "http://eccenca.com/mobivoc/Price",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "Watt",
+    "URI": "http://eccenca.com/mobivoc/Watt",
+    "RDFType": "rdf:Property",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "Ampere",
+    "URI": "http://eccenca.com/mobivoc/Ampere",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasCapacity",
+    "URI": "http://eccenca.com/mobivoc/hasCapacity",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasCellVoltage",
+    "URI": "http://eccenca.com/mobivoc/hasCellVoltage",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasChargeTime",
+    "URI": "http://eccenca.com/mobivoc/hasChargeTime",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasCRate",
+    "URI": "http://eccenca.com/mobivoc/hasCRate",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasCycleLife",
+    "URI": "http://eccenca.com/mobivoc/hasCycleLife",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasOperatingTemperature",
+    "URI": "http://eccenca.com/mobivoc/hasOperatingTemperature",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasSelfDischarge",
+    "URI": "http://eccenca.com/mobivoc/hasSelfDischarge",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasSpecificEnergyDensity",
+    "URI": "http://eccenca.com/mobivoc/hasSpecificEnergyDensity",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "hasSpecificPower",
+    "URI": "http://eccenca.com/mobivoc/hasSpecificPower",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "Longevity",
+    "URI": "http://eccenca.com/mobivoc/Longevity",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "Performance",
+    "URI": "http://eccenca.com/mobivoc/Performance",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "Price",
+    "URI": "http://eccenca.com/mobivoc/Price",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  },
+  {
+    "parent": "",
+    "concept": "Watt",
+    "URI": "http://eccenca.com/mobivoc/Watt",
+    "RDFType": "owl:DatatypeProperty",
+    "fileName": "Battery.ttl"
+  }
+]

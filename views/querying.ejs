@@ -1,0 +1,286 @@
+<% include header.ejs %>
+<!-- <link href='//cdn.jsdelivr.net/yasgui/2.5.0/yasgui.min.css' rel='stylesheet' type='text/css'/> -->
+<!-- <link rel="stylesheet" href="../../javascripts/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../javascripts/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="../../stylesheets/bootstrap-treeview.min.css">
+<link rel="stylesheet" type="text/css" href="../../stylesheets/dataTables.min.css">
+<link rel="stylesheet" href="../../semantic/dist/semantic.min.css">
+<link rel="stylesheet" href="../../stylesheets/style.css">
+<link href="../../stylesheets/yasqe2.css" rel="stylesheet" type="text/css" />
+
+<link href="../../stylesheets/mTab-style.css" type="text/css" rel="stylesheet" />
+<script src="../../javascripts/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../javascripts/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src='../../javascripts/yasqe2.js'></script> -->
+<link href='//cdn.jsdelivr.net/npm/yasgui-yasqe@2.11.22/dist/yasqe.min.css' rel='stylesheet' type='text/css'/>
+<link href='//cdn.jsdelivr.net/npm/yasgui-yasr@2.12.19/dist/yasr.min.css' rel='stylesheet' type='text/css'/>
+<div style="margin-top: 3% !important;"></div>
+<div class="ui grid">
+  <div class="ui container">
+    <div class="col-md-12">
+      <h1>SPARQL Query</h1>
+      <!-- <div id="showcase"></div> -->
+      <div id="yasqe"></div>
+      <div id="yasr"></div>
+    </div>
+    <!-- <iframe id="myframe" src="./fuseki/dataset.html?tab=query&ds=/dataset" frameborder="0" scrolling="auto" style="position: absolute; width:100% ; top:-190px ;right: 0px; left: 0px"></iframe> -->
+  </div>
+</div>
+
+
+<script src='//cdn.jsdelivr.net/yasr/2.10.8/yasr.bundled.min.js'></script>
+<script src='//cdn.jsdelivr.net/yasqe/2.2/yasqe.bundled.min.js'></script>
+
+<script>
+YASQE.defaults.sparql.endpoint = "http://localhost:3030/dataset/sparql";
+//document.URL.split("querying")[0] + 'fuseki/dataset/query' ;
+//YASQE.defaults.sparql.defaultGraphs =
+var yasqe = YASQE(document.getElementById("yasqe"), {
+	sparql: {
+		showQueryButton: true
+	}
+});
+var yasr = YASR(document.getElementById("yasr"), {
+	//this way, the URLs in the results are prettified using the defined prefixes in the query
+	getUsedPrefixes: yasqe.getPrefixesFromQuery
+});
+
+//link both together
+yasqe.options.sparql.callbacks.complete = yasr.setResponse;
+//yasqe.options.sparql.defaultGraphs = ["http://localhost:3030/dataset/ins2/master/test/skos1.ttl","http://localhost:3030/dataset/sto/master/sto.ttl"];
+
+//yasqe.options.sparql.defaultGraphs = ["http://localhost:3030/dataset/sto/master/sto.ttl"];
+//
+// YASQE.defaults.sparql.showQueryButton = true;
+// YASQE.defaults.sparql.endpoint = document.URL.split("querying")[0] + 'fuseki/dataset/sparql' ;
+// YASQE.defaults.sparql.callbacks.success =  function(data){console.log("success", data);};
+//
+//
+//
+// /**
+//  * We use most of the default settings for the property and class autocompletion types. This includes:
+//  * -  the pre/post processing of tokens
+//  * -  detecting whether we are in a valid autocompletion position
+//  * -  caching of the suggestion list. These are cached for a period of a month on the client side.
+//  */
+//
+// var getAutocompletionsArrayFromCsv = function(csvString) {
+// 	var completionsArray = [];
+// 	csvString.split("\n").splice(1).forEach(function(url) {//remove first line, as this one contains the projection variable
+// 		completionsArray.push(url.substring(1, url.length-1));//remove quotes
+// 	});
+// 	return completionsArray;
+// }
+//
+//
+//
+// var customPropertyCompleter = function(yasqe) {
+// 	//we use several functions from the regular property autocompleter (this way, we don't have to re-define code such as determining whether we are in a valid autocompletion position)
+// 	var returnObj = {
+// 		isValidCompletionPosition: function(){return YASQE.Autocompleters.properties.isValidCompletionPosition(yasqe)},
+// 		preProcessToken: function(token) {return YASQE.Autocompleters.properties.preProcessToken(yasqe, token)},
+// 		postProcessToken: function(token, suggestedString) {return YASQE.Autocompleters.properties.postProcessToken(yasqe, token, suggestedString)}
+// 	};
+//
+// 	//In this case we assume the properties will fit in memory. So, turn on bulk loading, which will make autocompleting a lot faster
+// 	returnObj.bulk = true;
+// 	returnObj.async = true;
+//
+// 	//and, as everything is in memory, enable autoShowing the completions
+// 	returnObj.autoShow = true;
+//
+// 	returnObj.persistent = "customProperties";//this will store the sparql results in the client-cache for a month.
+// 	returnObj.get = function(token, callback) {
+// 		//all we need from these parameters is the last one: the callback to pass the array of completions to
+// 		var sparqlQuery = "PREFIX void: <http://rdfs.org/ns/void#>\n" +
+// 		"PREFIX ds: <http://bio2rdf.org/bio2rdf.dataset_vocabulary:>\n" +
+// 		"SELECT  *\n" +
+// 		" from <http://localhost:3030/dataset/ins3/develop/Vehicle.ttl>  Where { ?s ?p ?o . " +
+// 		"}";
+// 		$.ajax({
+// 			data: {query: sparqlQuery},
+// 			url: YASQE.defaults.sparql.endpoint,
+// 			headers: {Accept: "text/csv"},//ask for csv. Simple, and uses less bandwidth
+// 			success: function(data) {
+// 				callback(getAutocompletionsArrayFromCsv(data));
+// 			}
+// 		});
+// 	};
+// 	return returnObj;
+// };
+// //now register our new autocompleter
+// YASQE.registerAutocompleter('customPropertyCompleter', customPropertyCompleter);
+
+
+// //excellent, now do the same for the classes
+// var customClassCompleter = function(yasqe) {
+// 	var returnObj = {
+// 		isValidCompletionPosition: function(){return YASQE.Autocompleters.classes.isValidCompletionPosition(yasqe)},
+// 		preProcessToken: function(token) {return YASQE.Autocompleters.classes.preProcessToken(yasqe, token)},
+// 		postProcessToken: function(token, suggestedString) {return YASQE.Autocompleters.classes.postProcessToken(yasqe, token, suggestedString)}
+// 	};
+// 	returnObj.bulk = true;
+// 	returnObj.async = true;
+// 	returnObj.autoShow = true;
+// 	returnObj.get = function(token, callback) {
+// 		var sparqlQuery = "PREFIX void: <http://rdfs.org/ns/void#>\n" +
+// 		"PREFIX ds: <http://bio2rdf.org/bio2rdf.dataset_vocabulary:>\n" +
+// 		"SELECT *\n" +
+// 		"{ [] void:subset [\n" +
+// 		"       a ds:Dataset-Type-Count;\n" +
+// 		"       void:class ?type\n"+
+// 		"   ]\n" +
+// 		"} ORDER BY ?type";
+// 		$.ajax({
+// 			data: {query: sparqlQuery},
+// 			url: YASQE.defaults.sparql.endpoint,
+// 			headers: {Accept: "text/csv"},//ask for csv. Simple, and uses less bandwidth
+// 			success: function(data) {
+// 				callback(getAutocompletionsArrayFromCsv(data));
+// 			}
+// 		});
+// 	};
+// 	return returnObj;
+// };
+//YASQE.registerAutocompleter('customClassCompleter', customClassCompleter);
+
+// //And, to make sure we don't use the other property and class autocompleters, overwrite the default enabled completers
+// YASQE.defaults.autocompleters = ['customClassCompleter', 'customPropertyCompleter'];
+// //YASQE.options.sparql.namedGraphs = ["http://localhost:3030/dataset/ins3/develop/Vehicle.ttl"]
+// YASQE.defaults.sparql.defaultGraphs = ["http://localhost:3030/dataset/ins3/develop/Vehicle.ttl"]
+// //yasqe.options.sparql.namedGraphs
+// //finally, initialize YASQE
+// var yasqe = YASQE(document.getElementById("yasqe"));
+//yasqe.options.sparql.namedGraphs
+//yasqe.options.sparql.defaultGraphs = ["http://localhost:3030/dataset/ins3/develop/Vehicle.ttl"]
+
+  // var yasqe = YASQE(document.getElementById("yasqe"), {
+  //   sparql: {
+  //     showQueryButton: true
+  //   }
+  // });
+  // var yasr = YASR(document.getElementById("yasr"), {
+  //   //this way, the URLs in the results are prettified using the defined prefixes in the query
+  //   getUsedPrefixes: yasqe.getPrefixesFromQuery
+  // });
+  //
+  // //link both together
+  // yasqe.options.sparql.callbacks.complete = yasr.setResponse;
+
+  // var config = {
+  //   "api": {
+  //     "urlShortener": "/shorten"
+  //   },
+  //   "endpoint": document.URL.split("querying")[0] +
+  //     'fuseki/dataset/sparql'
+  // };
+  //
+  //
+  // var yasqe = YASGUI(document.getElementById("showcase"), config);
+  // var currentTab = yasqe.persistentOptions.selected;
+  //
+  // // query to find all the named graphs in SPARQL-endpoint
+  var allNamedGraphsQuery = 'SELECT DISTINCT ?g ' +
+    'WHERE {' +
+    '  GRAPH ?g { ?s ?p ?o }' +
+    '}';
+  var endpoint = document.URL.split("querying")[0] +
+    'fuseki/dataset/sparql' + "?query="
+
+  $.ajax({
+    type: 'GET',
+    url: endpoint + allNamedGraphsQuery,
+    headers: {
+      Accept: 'application/sparql-results+json;charset=UTF-8'
+    },
+    success: function(data, response, jqXHR) {
+      var list = [],
+        namedGraphsString4Qurery = "";
+      // Show the HTML for the Google homepage.
+      if (data != null) {
+        var graphs = data.results.bindings;
+
+        //console.log(graphs);
+        if (graphs[0] != null) {
+          for (var i = 0; i < graphs.length; i++){
+            if(graphs[i]["g"].value.includes("ins3"))
+            list.push(graphs[i]["g"].value);
+          }
+
+          yasqe.options.sparql.defaultGraphs = list;
+          console.log(list);
+
+        }
+        console.log(list);
+
+
+
+
+
+  //
+  // console.log(currentTab);
+  // yasqe.tabs[currentTab].persistentOptions.yasqe.sparql.namedGraphs = ["http://localhost:3030/dataset/ins3/develop/Vehicle.ttl"];
+  // //from <http://localhost:3030/dataset/ins3/develop/Vehicle.ttl>
+  // debugger
+
+
+
+
+
+  //yasqe.tabs[currentTab].persistentOptions.yasqe.sparql.namedGraphs = ["http://localhost:3030/dataset/ins3/develop/Vehicle.ttl"];
+  //yasqe.tabs[currentTab].persistentOptions.yasqe.sparql.defaultGraphs = list;
+  //yasqe.tabs[currentTab].persistentOptions.yasqe.value = "SELECT * from  <http://localhost:3030/dataset/ins3/develop/Vehicle.ttl> WHERE"
+  // +"{?sub ?pred ?obj .} "
+  //console.log(yasqe.tabs[currentTab].persistentOptions.yasqe.value);
+
+  //yasqe.tabs[currentTab].yasqe.options.sparql.namedGraphs = list;
+  //yasqe.tabs[currentTab].yasqe.query()
+  //
+      } else {
+        console.log(response)
+        console.warn(response);
+      }
+    }
+  });
+
+  // $('.yasqe_queryButton.query_valid').on('click', function(){
+  //
+  //   //alert("clicked")
+  //   //yasqe.tabs[currentTab].yasqe.query()
+  //   //debugger
+  //
+  // })
+
+
+
+
+
+
+
+
+
+  ////console.log(currentNamedgraph);
+  //  yasqe.persistentOptions.tabs.usbxc.yasqe.sparql.namedGraphs = [];
+  //console.log(yasqe.persistentOptions.tabs.usbxc.yasqe.sparql);
+  // if (yasqe.persistentOptions.tabs.usbxc.yasqe.value.toLowerCase().includes("where"))
+  //  yasqe.persistentOptions.tabs.usbxc.yasqe.value = yasqe.persistentOptions.tabs.usbxc.yasqe.value.toLowerCase().split("where")[0] +
+  //  " from <http://localhost:3030/dataset/ins3/develop/Vehicle.ttl> " +
+  //  yasqe.persistentOptions.tabs.usbxc.yasqe.value.toLowerCase().split("where")[1];
+  //console.log(yasqe.persistentOptions.tabs.usbxc.yasqe.getValue());
+
+  // $('#myframe').on('load', function() {
+  //   resizeIframe(this);
+  //   var iframe = $('#myframe').contents();
+  //   iframe.find("#results-block").change(function() {});
+  // });
+  //
+  // function resizeIframe(obj) {
+  //   // Initially just set the height to 100% till the inner page loads and once the page inside the iframe is loaded
+  //   // then set the iframe height to match that page height so that it looks seamless to the user
+  //   obj.style.height = "100vH";
+  //   setTimeout(function() {
+  //     obj.style.display = "block";
+  //     obj.style.height = $(obj.contentWindow.document.body).height() + "px";
+  //   }, 2500);
+  // }
+</script>
