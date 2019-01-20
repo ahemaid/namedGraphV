@@ -219,7 +219,7 @@
           $('#detailTable').html(externalURITable);
           $('#detailTable').transition('shake')
           var endpoint = "./../../fuseki/dataset/sparql?query=";
-          var querystring = 'SELECT  ?s '+ fromInQueryWithoutNamed +' WHERE { ?s  a <' + encodeURIComponent(ExteralURI) + '> }';
+          var querystring = 'SELECT  ?s '+ fromInQueryWithoutNamed +' WHERE { ?s  a <' + ExteralURI + '> }';
           $.ajax({
             type: 'GET',
             url: endpoint + encodeURIComponent(querystring),
@@ -382,7 +382,7 @@
       // show info. details of clicked instance
       function showInstanceDetails(instanceURI) {
         var endpoint = "./../../fuseki/dataset/sparql?query=";
-        var querystring = 'SELECT  ?p ?o '+ fromInQueryWithoutNamed +' WHERE {  <' + encodeURIComponent(instanceURI) + '> ?p ?o }';
+        var querystring = 'SELECT  ?p ?o '+ fromInQueryWithoutNamed +' WHERE {  <' + instanceURI + '> ?p ?o }';
         $.ajax({
           type: 'GET',
           url: endpoint + encodeURIComponent(querystring),
@@ -468,7 +468,7 @@
           }
           if (isURIExist) {
             var endpoint = "./../../fuseki/dataset/sparql?query=";
-            var querystring = 'SELECT  ?s '+ fromInQueryWithoutNamed +' WHERE { ?s  a <' + encodeURIComponent(conceptURI) + '> }';
+            var querystring = 'SELECT  ?s '+ fromInQueryWithoutNamed +' WHERE { ?s  a <' + conceptURI + '> }';
             $.ajax({
               type: 'GET',
               url: endpoint + encodeURIComponent(querystring),
@@ -580,9 +580,9 @@
         if (isURIExist) {
           var endpoint = "./../../fuseki/dataset/sparql?query=";
           if (!anotherQuery)
-            var querystring = 'CONSTRUCT{<' + encodeURIComponent(conceptURI) + '> ?p ?o .} '+ fromInQueryWithoutNamed +' WHERE {<' + encodeURIComponent(conceptURI) + '> ?p ?o .}';
+            var querystring = 'CONSTRUCT{<' + conceptURI + '> ?p ?o .} '+ fromInQueryWithoutNamed +' WHERE {<' + conceptURI + '> ?p ?o .}';
           else
-            var querystring = 'CONSTRUCT{ ?s ?p <' + encodeURIComponent(conceptURI) + '> .} '+ fromInQueryWithoutNamed +' WHERE { ?s ?p <' + encodeURIComponent(conceptURI) + '> .}';
+            var querystring = 'CONSTRUCT{ ?s ?p <' + conceptURI + '> .} '+ fromInQueryWithoutNamed +' WHERE { ?s ?p <' + conceptURI + '> .}';
           $('div.yasqe').empty();
           $.ajax({
             type: 'GET',
