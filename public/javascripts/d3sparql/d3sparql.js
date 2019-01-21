@@ -73,13 +73,11 @@
             });
               }
             } else {
-              console.log(response)
+             // console.log(response)
               console.warn(response);
             }
           }
         });
-
-
           }
           else
           {
@@ -92,7 +90,7 @@
 
           var mime = "application/sparql-results+json"
           d3.xhr(url, mime, function(request) {
-            console.log(request)
+            //console.log(request)
             var json = request.responseText
             if (d3sparql.debug) {
               console.log(json);
@@ -226,11 +224,9 @@
 
           function prune_node(node) {
             var node_parent = hash_nodes[node.name];
-            console.log(node_parent);
             var index = look_for_position(node.name, node_parent.children);
             if (index != -1) {
               node_parent.children = node_parent.children.splice(index, 1);
-              console.log(node_parent);
             }
           }
 
@@ -662,7 +658,6 @@
         //Force graph
         d3sparql.forcegraph = function(json, config) {
           var graph = createGraph(json);
-          //console.log(graph);
           //var neighbors = {}; // Key = vertex, value = array of neighbors.
           $("#myChartBarDiv").hide();
           $("#myChartPieDiv").hide();
@@ -1110,8 +1105,6 @@
           function pathToGraph(path, graph) {
             var nodes = [],
               edges = [];
-
-            console.log(path);
             if (path != null) {
               for (var i = 0; i < path.length; ++i) {
                 nodes.push({
