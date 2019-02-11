@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <title>
+        <%- title %>
+    </title>
+    <link id="favicon" rel="shortcut icon" href="../../images/favicon.ico" />
+    <link rel="stylesheet" href="../../javascripts/semanticUI/semantic.min.css">
+    <link href="../../stylesheets/mTab-style.css" type="text/css" rel="stylesheet" />
+    <script src="../../javascripts/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../javascripts/semanticUI/semantic.min.js"></script>
+    <script src="../../javascripts/jquery-mTab-min.js"></script>
+    <script src="../../javascripts/bootstrap-treeview.min.js"></script>
+    <script src="../../javascripts/lodash.js"></script>
+    <script src="../../javascripts/d3sparql/d3sparql.js"></script>
+</head>
+
+<body>
+    <div class="ui  inverted segment">
+        <div class="ui huge inverted secondary menu">
+            <div class="item">
+                <img src="/images/logo2.png">
+            </div>
+            <a class="item">
+                Home
+            </a>
+            <a class="item">
+                Ontologies
+            </a>
+            <a class="item ">
+                Search
+            </a>
+            <div class="right menu">
+                <a class="item">Login</a>
+                <div class="item">
+                    <div class="ui primary button">Sign Up</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2 class="ui center aligned icon header">
+            <i class="red circular users icon"></i>
+            Welcome to Vocol Service
+        </h2>
+    </div>
+    <div class="ui container">
+        <div class="ui two column grid">
+            <div class="column">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">Search for a class</div>
+                    </div>
+                    <div class="content">
+                        <div class="ui large feed">
+                            <div class="ui fluid category search">
+                                <div class="ui icon input">
+                                    <input class="prompt" type="text" placeholder="Search animals...">
+                                    <i class="search icon"></i>
+                                </div>
+                                <div class="results"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <button class="ui button">Advaced Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">Find an ontology</div>
+                    </div>
+                    <div class="content">
+                        <div class="ui large feed">
+
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <button class="ui button"> Browse Ontologies</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="ui bottom fixed inverted  menu">
+        <a class="item">
+            Data Protection
+        </a>
+        <a class="item">
+            Imprint
+        </a>
+        <div class="middle menu">
+            <a href="https://vocol.iais.fraunhofer.de/" class="item">&copy; 2019 vocol.iais.fraunhofer.de</a>
+        </div>
+
+        <div class=" big right menu">
+            <div class="item">
+                <a href="https://vocol.iais.fraunhofer.de/"> <i class="blue github icon"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="coverScreen" class="LockOn" style=" display: none;">
+    </div>
+    <style>
+        .ui.menu .item>img:not(.ui) {
+            width: 4.5em;
+        }
+
+        i.icon,
+        i.icons {
+            font-size: 3em;
+        }
+
+        .ui.card,
+        .ui.cards>.card {
+            width: auto;
+        }
+    </style>

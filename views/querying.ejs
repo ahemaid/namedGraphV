@@ -186,6 +186,8 @@ yasqe.options.sparql.callbacks.complete = yasr.setResponse;
     '}';
   var endpoint = document.URL.split("querying")[0] +
     'fuseki/dataset/sparql' + "?query="
+    var branchName = document.URL.substring(document.URL.lastIndexOf('/') + 1);
+    var instaceName = document.URL.split('/' + branchName)[0].substring(document.URL.split('/' + branchName)[0].lastIndexOf('/') + 1);
 
   $.ajax({
     type: 'GET',
@@ -203,7 +205,7 @@ yasqe.options.sparql.callbacks.complete = yasr.setResponse;
         //console.log(graphs);
         if (graphs[0] != null) {
           for (var i = 0; i < graphs.length; i++){
-            if(graphs[i]["g"].value.includes("ins3"))
+            if(graphs[i]["g"].value.includes(branchName) && graphs[i]["g"].value.includes(instaceName))
             list.push(graphs[i]["g"].value);
           }
 

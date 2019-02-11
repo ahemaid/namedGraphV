@@ -27,6 +27,8 @@
 
           if (document.URL.includes("analytics"))
           {
+            $("#coverScreen").show();
+
 
               // // query to find all the named graphs in SPARQL-endpoint
           var allNamedGraphsQuery = 'SELECT DISTINCT ?g ' +
@@ -69,6 +71,7 @@
               if (d3sparql.debug) {
                 console.log(json);
               }
+              $("#coverScreen").hide();
               callback(JSON.parse(json))
             });
               }

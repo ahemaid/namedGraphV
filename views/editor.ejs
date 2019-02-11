@@ -1,4 +1,5 @@
 <% include header %>
+<script src="../../javascripts/editor/js/lib/require.js" ></script>
 
 <style type="text/css">
   .styled-background {
@@ -176,22 +177,26 @@
 <% include footer %>
 
 <script>
-  var require = {
-    baseUrl: '../javascripts/editor/js',
-    paths: {
-      mode: '../mode',
-      N3: 'lib/n3-browser-slk',
-      jquery: 'lib/jquery-2.1.3.min',
-      github: 'lib/github',
-      underscore: 'lib/underscore-min',
-      semanticUI: '../../javascripts/semanticUI',
-    },
-    shim: { // see http://requirejs.org/docs/api.html#config-shim
-      'N3': {
-        exports: 'N3'
-      }
-    }
-  };
+  // var require = {
+  //   baseUrl: '../javascripts/editor/js',
+  //   paths: {
+  //     mode: '../mode',
+  //     N3: 'lib/n3-browser-slk',
+  //     jquery: 'lib/jquery-2.1.3.min',
+  //     github: 'lib/github',
+  //     underscore: 'lib/underscore-min',
+  //     semanticUI: '../../semanticUI',
+  //   },
+  //   shim: { // see http://requirejs.org/docs/api.html#config-shim
+  //     'N3': {
+  //       exports: 'N3'
+  //     }
+  //   }
+  // };
+
+//   require(['foo'], function(foo) {
+
+// });
 
 
   // see https://www.npmjs.com/package/github-client
@@ -224,6 +229,17 @@
   //   function($, Github, N3, CodeMirror, ShowHint, ModeTurtle, HintTurtle,
   //     logger, Search, SearchCursor, MarkSelection, SemanticUI) {
 
+    require(['../../javascripts/editor/js/config'], function() {
+    // Configuration loaded now, safe to do other require calls
+    // that depend on that config.
+
+    define(['jquery', 'github', 'N3', 'lib/codemirror',
+    'addon/hint/show-hint', 'mode/turtle/turtle', 'hint/turtle-hint',
+    'logger', 'addon/search/search', 'addon/search/searchcursor',
+    'addon/selection/mark-selection', 'semanticUI/semantic'
+  ],
+    function($, Github, N3, CodeMirror, ShowHint, ModeTurtle, HintTurtle,
+      logger, Search, SearchCursor, MarkSelection, SemanticUI) {
       // HTML elements ------------------------------------------------------------
 
       var menu = $("#menu");
@@ -852,5 +868,7 @@
           return this.indexOf(searchString, position) === position;
         };
       }
-  //  });
+  });
+});
+
 </script>

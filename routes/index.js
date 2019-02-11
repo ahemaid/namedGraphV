@@ -14,7 +14,26 @@ var escapeHtml = require('escape-html');
 const ejs = require('ejs');
 
 //  GET home page.
-router.get(['/', '/:instanceID/:branchName'], function(req, res) {
+router.get('/', function (req, res) {
+  if (!req.session.isAuthenticated && req.app.locals.authRequired)
+    res.render('login', {
+      title: 'login'
+    });
+  else {
+
+    res.render('homeTop', {
+      title: 'Home',
+      metaData: "",
+      statistics: "",
+      repoInfo: "",
+      homePage: "objectText"
+    });
+
+  }
+});
+
+//  GET home page.
+router.get( '/:instanceID/:branchName', function (req, res) {
   if (!req.session.isAuthenticated && req.app.locals.authRequired)
     res.render('login', {
       title: 'login'
@@ -35,7 +54,7 @@ router.get(['/', '/:instanceID/:branchName'], function(req, res) {
         headers: {
           'accept': acceptHeader
         },
-      }, function(error, response, body) {
+      }, function (error, response, body) {
         if (error) {
           console.log('error:', error); // Print the error if one occurred
         } else if (response && body) {
@@ -86,7 +105,7 @@ router.get(['/', '/:instanceID/:branchName'], function(req, res) {
         silent: false
       }).stdout;
       if (output) {
-        client.query(qOnt, function(error, data) { // query on dataset.
+        client.query(qOnt, function (error, data) { // query on dataset.
           if (error) {
             console.log(error);
           }
@@ -95,7 +114,7 @@ router.get(['/', '/:instanceID/:branchName'], function(req, res) {
             // json values of the query result
             metaData = result;
           }
-          client.query(qe, function(error, data) { // query on dataset.
+          client.query(qe, function (error, data) { // query on dataset.
             if (error) {
               console.log(error);
             }
@@ -124,10 +143,10 @@ router.get(['/', '/:instanceID/:branchName'], function(req, res) {
             // check if the userConfigurations file is exist
             // for the first time of app running
             var path = "jsonDataFiles/userConfigurations.json";
-            fs.exists(path, function(exists) {
+            fs.exists(path, function (exists) {
               var data = fs.readFileSync(path);
               if (exists && data.includes('vocabularyName')) {
-                jsonfile.readFile(path, function(err, obj) {
+                jsonfile.readFile(path, function (err, obj) {
                   if (err)
                     console.log(err);
                   if (obj.hasOwnProperty(
@@ -165,10 +184,10 @@ router.get(['/', '/:instanceID/:branchName'], function(req, res) {
         // check if the userConfigurations file is exist
         // for the first time of app running
         var path = "jsonDataFiles/userConfigurations.json";
-        fs.exists(path, function(exists) {
+        fs.exists(path, function (exists) {
           var data = fs.readFileSync(path);
           if (exists && data.includes('vocabularyName')) {
-            jsonfile.readFile(path, function(err, obj) {
+            jsonfile.readFile(path, function (err, obj) {
               if (err)
                 console.log(err);
               if (obj.hasOwnProperty('text'))

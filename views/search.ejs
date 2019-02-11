@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <title>
+        <%- title %>
+    </title>
+    <link id="favicon" rel="shortcut icon" href="../../images/favicon.ico" />
+    <link rel="stylesheet" href="../../javascripts/semanticUI/semantic.min.css">
+    <link href="../../stylesheets/mTab-style.css" type="text/css" rel="stylesheet" />
+    <script src="../../javascripts/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../javascripts/semanticUI/semantic.min.js"></script>
+    <script src="../../javascripts/jquery-mTab-min.js"></script>
+    <script src="../../javascripts/bootstrap-treeview.min.js"></script>
+    <script src="../../javascripts/lodash.js"></script>
+    <script src="../../javascripts/d3sparql/d3sparql.js"></script>
+</head>
+
+<body>
+    <div class="ui  inverted segment">
+        <div class="ui huge inverted secondary menu">
+            <div class="item">
+                <img src="/images/logo2.png">
+            </div>
+            <a class="item">
+                Home
+            </a>
+            <a class="item">
+                Ontologies
+            </a>
+            <a class="item ">
+                Search
+            </a>
+            <div class="right menu">
+                <a class="item"> <i class="teal user icon"></i> Login</a>
+                <a class="item"><i class="teal  user outline icon"></i>
+                    <button class="ui inverted teal button">Sign Up</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="ui container">
+        <div class="ui menu">
+            <div   class="item">
+                <div  class="ui icon input">
+                    <input id="searchConcept" type="text" placeholder="Search...">
+                    <i class="search icon"></i>
+                </div>
+            </div>
+            <div class="right item">
+                <div class="ui action input">
+                    <input type="text" placeholder="Navigate to...">
+                    <div class="ui button">Go</div>
+                </div>
+            </div>
+        </div>
+
+        <table id="conceptsTable" class="ui celled table">
+
+            <tbody class="">
+                <tr class="">
+                    <td class="">
+                        <div class="ui ribbon label">First</div>
+                        hid dsfsdf sd
+
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="">Cell</td>
+                    <td class="">Cell</td>
+                    <td class="">Cell</td>
+                </tr>
+                <tr class="">
+                    <td class="">Cell</td>
+                    <td class="">Cell</td>
+                    <td class="">Cell</td>
+                </tr>
+                <tr class="">
+                        <td class="">
+                            <div class="ui ribbon label">First</div>
+                        </td>
+                        <td class="">Cell1</td>
+                        <td class="">Cell</td>
+                    </tr>
+                    <tr class="">
+                        <td class="">Cell1</td>
+                        <td class="">Cell</td>
+                        <td class="">Cell</td>
+                    </tr>
+                    <tr class="">
+                        <td class="">Cell1</td>
+                        <td class="">Cell</td>
+                        <td class="">Cell</td>
+                    </tr>
+            </tbody>
+            <tfoot class="">
+                <tr class="">
+                    <th colSpan="3" class="">
+                        <div class="ui pagination right floated menu"><a class="icon item"><i aria-hidden="true" class="chevron left icon"></i></a><a
+                                class="item">1</a><a class="item">2</a><a class="item">3</a><a class="item">4</a><a
+                                class="icon item"><i aria-hidden="true" class="chevron right icon"></i></a></div>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="ui bottom fixed inverted  menu">
+        <a class="item">
+            Data Protection
+        </a>
+        <a class="item">
+            Imprint
+        </a>
+        <div class="middle menu">
+            <a href="https://vocol.iais.fraunhofer.de/" class="item">&copy; 2019 vocol.iais.fraunhofer.de</a>
+        </div>
+
+        <div class=" big right menu">
+            <div class="item">
+                <a href="https://github.com/vocol/vocol"> <i class="teal github icon"></i></a>
+            </div>
+        </div>
+    </div>
+    <div id="coverScreen" class="LockOn" style=" display: none;">
+    </div>
+</body>
+
+</html>
+
+< <style>
+    .ui.menu .item>img:not(.ui) {
+    width: 3.5em;
+    }
+
+    .ui.menu {
+    font-size: 1.2rem;
+    }
+
+    i.icon,
+    i.icons {
+    font-size: 2em;
+    }
+
+    /* .ui.card,
+    .ui.cards>.card {
+    width: auto;
+    margin-top: 40px;
+    } */
+    </style>
+    <script>
+        console.log(<%- JSON.stringify(searchTerm) %>)
+       // $('#example').DataTable();
+
+        var limitQueryValue = 10;
+        var Statistics = "";
+        var selectedOntology = "";
+        var graphListsWithBranches = [];
+
+        // string to hold table content
+        Statistics += '<tr><td class="td_content"> Classes</td><td class="right aligned">' +
+            "1000" + '</td></tr>';
+        Statistics += '<tr><td class="td_content"> RDF Properties </td><td class="right aligned">' +
+            "80" +
+            '</td></tr>';
+        Statistics += '<tr><td class="td_content"> OWL ObjectProperties	 </td><td class="right aligned">' +
+            "66" +
+            '</td></tr>';
+        Statistics += '<tr><td class="td_content"> OWL DatatypeProperties	 </td><td class="right aligned">' +
+            "5" + '</td></tr>'
+        Statistics += '<tr><td class="td_content"> OWL AnnotationProperties	 </td><td class="right aligned">' +
+            "55" + '</td></tr>'
+        Statistics += '<tr><td class="td_content"> Individuals	 </td><td class="right aligned">' +
+            "12" + '</td></tr>';
+
+
+        $("#response").append(Metadata);
+        $("#metaData").append(Statistics);
+
+        $("#coverScreen").show();
+
+
+        // // query to find all the named graphs in SPARQL-endpoint
+        var allNamedGraphsQuery = 'SELECT DISTINCT ?g ' +
+            'WHERE {' +
+            '  GRAPH ?g { ?s ?p ?o }' +
+            '}';
+        var url = "http://localhost:3030/dataset/sparql"
+        var endpoint = url + "?query="
+        $.ajax({
+            type: 'GET',
+            url: endpoint + allNamedGraphsQuery,
+            headers: {
+                Accept: 'application/sparql-results+json;charset=UTF-8'
+            },
+            success: function (data, response, jqXHR) {
+                // Show the HTML for the Google homepage.
+                if (data != null) {
+                    var graphs = data.results.bindings;
+                    var graphLists = [];
+                    if (graphs[0] != null) {
+                        for (var i = 0; i < graphs.length; i++) {
+                            if (graphs[i]["g"].value) {
+                                var stingIncludesInstace = graphs[i]["g"].value.split("dataset/")[1];
+                                var instanceName = stingIncludesInstace.split('/')[0];
+                                var stingIncludesBranch = graphs[i]["g"].value.split(instanceName + "/")[
+                                    1];
+                                var branchName = stingIncludesBranch.split('/')[0];
+                                graphLists.push({
+                                    "title": instanceName
+                                });
+                                graphListsWithBranches.push({
+                                    "instance": instanceName,
+                                    "branch": branchName
+
+                                });
+                            }
+
+                        }
+                        graphLists = Array.from(new Set(graphLists.map(JSON.stringify))).map(JSON.parse);
+                        graphListsWithBranches = Array.from(new Set(graphListsWithBranches.map(JSON.stringify)))
+                            .map(JSON.parse);
+
+                        $('#searchOntology')
+                            .search({
+                                source: graphLists
+                            });
+                        $("#coverScreen").hide();
+                    }
+                } else {
+                    // console.log(response)
+                    console.warn(response);
+                }
+            }
+        });
+
+        // looking for an ontology 
+        $("#searchOntology").on("click", function () {
+            selectedOntology = getValue();
+            console.log(selectedOntology);
+        });
+
+        // looking for a concept 
+        $("#searchConcept").on('keyup', function () {
+
+            if ($('#searchConcept').val().length > 2) {
+                $.ajax({
+                    type: 'GET',
+                    url: endpoint + encodeURIComponent(searchedConcepts($('#searchConcept').val())),
+                    headers: {
+                        Accept: 'application/sparql-results+json;charset=UTF-8'
+                    },
+                    success: function (data, response, jqXHR) {
+                        // Show the HTML for the Google homepage.
+                        if (data != null) {
+                            var concepts = data.results.bindings;
+                            console.log(concepts);
+                            var conceptLists = [];
+                            var conceptListDetails = [];
+                            if (concepts[0] != null) {
+                                for (var i = 0; i < concepts.length; i++) {
+                                    if (concepts[i]["g"].value){
+                                        // conceptLists.push({
+                                        //     "title": concepts[i]["name"].value
+                                        // });
+                                    var comment = (concepts[i].hasOwnProperty("comment"))?concepts[i]["comment"].value : ""
+                                    var label = (concepts[i].hasOwnProperty("label"))?concepts[i]["label"].value : ""
+                                    conceptListDetails.push({
+                                        "subject": concepts[i]["subject"].value,
+                                        "graph": concepts[i]["g"].value,
+                                        "label": label,
+                                        "comment": comment
+                                    });
+                                }
+                                // }
+                                // var listItems = function () {
+                                //     var string = "";
+                                //     conceptListDetails.forEach(element => {
+                                //         let stingIncludesInstace = element.graph.split(
+                                //             "dataset/")[1];
+                                //         let instanceName = stingIncludesInstace.split(
+                                //             '/')[0];
+                                //         let stingIncludesBranch = element.graph.split(
+                                //             instanceName + "/")[
+                                //             1];
+                                //         let branchName = stingIncludesBranch.split('/')[
+                                //             0];
+
+                                //         string +=
+                                //             // '<div class="item"><div class=" content"><i class="small blue  tint icon"></i><a href="' +
+                                //             // document.URL+'/'+instanceName+'/'+branchName+'/'+element.name +'">' + element.name +
+                                //             // '</a></div></div>'
+                                //             '<div class="item"><div class=" content"><i class="small blue  tint icon"></i><a href="#" onclick="showAlert(event);return false;">' +
+                                //             element.name +
+                                //             '</a></div></div>'
+                                //     });
+                                //     return string;
+                                }
+                                console.log(conceptListDetails);
+                                // $('.divided.list').html("");
+                                // $('.divided.list').append(listItems);
+                            }
+                        } else {
+                            console.warn(response);
+                        }
+                    }
+                });
+            } else {
+                $('.divided.list').html("");
+            }
+
+        });
+
+
+        function getValue() {
+            return ($('#searchOntology').search('get value'));
+        }
+
+        // function takeMeToTheOntology() {
+        //     if (selectedOntology) {
+        //         console.log(JSON.stringify(graphListsWithBranches));
+        //         var availableBranch = '';
+        //         // iterate over each element in the array
+        //         for (var i = 0; i < graphListsWithBranches.length; i++) {
+        //             // look for the entry with a matching `code` value
+        //             if (graphListsWithBranches[i].instance == selectedOntology) {
+        //                 availableBranch = graphListsWithBranches[i].branch;
+        //                 break;
+        //             }
+        //         }
+        //         window.location.href = document.URL.split('#')[0] + 'documentation/' + selectedOntology + '/' +
+        //             availableBranch;
+        //     }
+        // }
+
+        //test function
+        // function showAlert(e) {
+        //     alert(e.target.innerHTML)
+        //     e.preventDefault();
+
+        // }
+
+
+
+        // query to get searchedConcepts
+        var searchedConcepts = function (searchedString) {
+            return ("PREFIX owl: <http://www.w3.org/2002/07/owl#> " +
+                " PREFIX  afn:  <http://jena.apache.org/ARQ/function#> " +
+                " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+                " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+                " SELECT DISTINCT ?subject ?label ?comment ?g ?name	 " +
+                "  WHERE { GRAPH ?g { { ?subject ?p ?o ." +
+                "  OPTIONAL{?subject rdfs:label ?label .} " +
+                "  OPTIONAL{?subject rdfs:comment ?comment .} " +
+                "  FILTER(!isBlank(?subject)) FILTER(contains(afn:localname(?subject),\"" + searchedString + "\"))}}} " 
+// "  bind(afn:localname(?s)	 as ?name)} }" +
+               +"  limit " + limitQueryValue
+            )
+        }
+
+    </script>

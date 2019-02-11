@@ -12,6 +12,7 @@ var client = require('./routes/clientServices');
 var login = require('./routes/login');
 var adminLogin = require('./routes/adminLogin');
 var referenceRoutes = require('./routes/referenceRoutes');
+var search = require('./routes/search');
 var listener = require('./routes/listener');
 var configOnto = require('./routes/configOnto');
 var fs = require('fs');
@@ -24,7 +25,7 @@ var proxy = require('express-http-proxy');
 var shell = require('shelljs');
 var session = require('express-session');
 var escapeHtml = require('escape-html');
-
+var favicon = require('serve-favicon');
 
 ///////////////////
 //save currentNamedgraph
@@ -43,6 +44,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 // no caching
 app.use(function(req, res, next) {
   res.header('Cache-Control',
@@ -52,6 +54,8 @@ app.use(function(req, res, next) {
   next()
 });
 
+
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 app.locals.isExistSyntaxError = "false";
 var ErrorsFilePath = __dirname + '/jsonDataFiles/syntaxErrors.json';
@@ -202,7 +206,7 @@ app.get('*', function(req, res, next) {
 });
 
 // routing to the available routes on the app
-app.use(['\/\/home', '/home'], routes);
+app.use(['\/\/', '/','\/\/home', '/home'], routes);
 app.use(['\/\/documentation', '/documentation'], documentation);
 app.use(['\/\/webvowlLink', '/webvowlLink'], express.static(path.join(__dirname,
   "views/webvowl")));
@@ -218,7 +222,7 @@ app.use(['\/\/listener', '/listener'], listener);
 app.use(['\/\/login', '/login'], login);
 app.use(['\/\/adminLogin', '/adminLogin'], adminLogin);
 app.use(['\/\/configOnto', '/configOnto'], configOnto);
-
+app.use(['\/\/search', '/search'], search);
 
 app.use(['\/\/fuseki/', '/fuseki/'], proxy('localhost:' + process.argv.slice(2)[
     1] || 3030 + '/', {

@@ -17,7 +17,7 @@ var instancesArray = instances.split(/[\n]/);
 instancesArray.pop();
 console.log(instancesArray);
 
-var data = shell.exec('find ins3/develop -type f -name \'*.ttl\'', {
+var data = shell.exec('find fhir/master -type f -name \'*.ttl\'', {
   silent: false
 });
 
