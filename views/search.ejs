@@ -60,8 +60,9 @@
                 </div>
             </div>
         </div>
+        <div class="ui grid">
 
-        <table id="conceptsTable" class="ui celled table" style="display:none">
+        <table id="conceptsTable" class="ui celled table" style="margin-bottom: 5%; display:none">
             <tbody id="bodyOfTable" class="">
 
             </tbody>
@@ -74,6 +75,7 @@
             </tfoot>
         </table>
     </div>
+</div>
 
     <div class="ui bottom fixed inverted  menu">
         <a class="item">
@@ -226,12 +228,11 @@
 
         // looking for a concept 
         function search(str) {
-            var searchString = "";
-            if (str)
-                searchString = str
-            else
-                searchString = $('#searchConcept').val();
-            alert(searchString)
+            // var searchString = "";
+            // if (str)
+            //     searchString = str
+            // else
+            searchString = $('#searchConcept').val();
             if (searchString.length > 2) {
                 //ajax call to get the count of found result
                 $.ajax({
@@ -253,9 +254,7 @@
                             pagination +=
                                 '<a class="icon item"><i aria-hidden="true" class="chevron right icon"></i></a>';
 
-                            // show number of pages of the current table 
-                            $("#footTable").show();
-                            $("#pagination").append(pagination);
+
 
                             // ajax call to return found result 
                             $.ajax({
@@ -292,7 +291,8 @@
                                                             "g"
                                                         ].value,
                                                         "label": label,
-                                                        "comment": comment
+                                                        "comment": comment, 
+                                                        "localname": concepts[i]["localname"].value
                                                     });
                                                 }
                                                 // }
@@ -323,44 +323,66 @@
 
                                             var bodyOfTableHTML =
                                                 '<tr class=""> <td class="">';
+                                            var isTablehasData = false;
                                             for (key in conceptListDetails) {
+                                                isTablehasData = true;
                                                 bodyOfTableHTML +=
-                                                    '<div class="ui items">' +
-                                                    '<div class="item">' +
-                                                    '<div class="content">' +
-                                                    '<a class="header"> ' +
-                                                    conceptListDetails[key].subject +
-                                                    '</a>' +
-                                                    '<div class="description">';
-                                                if (conceptListDetails[key].comment)
-                                                    bodyOfTableHTML +=
-                                                    '<p><b>rdfs:comment<b>:' +
-                                                    conceptListDetails[key].comment +
-                                                    '</p>';
+                                                    '<div class="ui segments">  <div class="ui blue segment"><a class="ui grey big ribbon label" style="margin-top: -1%; margin-bottom: 1%;">'+conceptListDetails[key].localname+'</a>' +
+                                                    '<br/><div class="ui purple horizontal label"> localName</div> ' +
+                                                    conceptListDetails[key].localname+
+                                                    '<br /><div class="ui purple horizontal label" style="margin-top: 2px;">URI</div> ' +
+                                                    conceptListDetails[key].subject ;
+
                                                 if (conceptListDetails[key].label)
                                                     bodyOfTableHTML +=
-                                                    '<p><b>rdfs:label<b>:' +
+                                                    '<div class="ui secondary segment"><a class="ui teal ribbon label">rdfs:label</a>' +
                                                     conceptListDetails[key].label +
-                                                    '</p>';
+                                                    '</div>';
+                                                if (conceptListDetails[key].comment)
+                                                    bodyOfTableHTML +=
+                                                    '<div class="ui secondary segment"><a class="ui blue ribbon label">rdfs:comment</a>' +
+                                                    conceptListDetails[key].comment +
+                                                    '</div>';
                                                 bodyOfTableHTML +=
-                                                    '</div></div></div></div>';
+                                                    '</div></div></div>';
                                             }
-                                            bodyOfTableHTML += '</td></tr>';
+                                            bodyOfTableHTML +=
+                                                '<div class="hr"></div></td></tr>';
                                             console.log(conceptListDetails);
-                                            $('#conceptsTable').show();
-                                            $('#bodyOfTable').append(bodyOfTableHTML);
-                                            // $('.divided.list').html("");
-                                            // $('.divided.list').append(listItems);
+
+                                            // show the content of the table
+                                            if (isTablehasData) {
+                                                $('#conceptsTable').show();
+                                                $('#bodyOfTable').append(bodyOfTableHTML);
+                                                isTablehasData = false;
+                                            }
+                                            else{
+                                                $('#conceptsTable').hide();
+                                                $('#bodyOfTable').html("");
+                                            }
+                                            // show number of pages of the current table 
+                                            if (Math.ceil(count[0]["count"].value) > 10) {
+                                                $("#footTable").show();
+                                                $("#pagination").append(pagination);
+                                            }
+                                            else{
+                                                $("#footTable").hide();
+                                                $("#pagination").html("");
+                                            }
+                                        }
+                                        else{
+                                            $('#conceptsTable').hide();
+                                                $('#bodyOfTable').html("");
+                                                $("#footTable").hide();
+                                                $("#pagination").html("");
+
                                         }
                                     } else {
+
                                         console.warn(response);
                                     }
                                 }
                             });
-
-
-
-
                         }
                     }
                 });
@@ -374,6 +396,14 @@
         // check search input on keyup
         $('#searchConcept').on('keyup', search);
 
+        $('#pagination').on('click', function (e) {
+            // alert(e.target.innerHTML)
+            if (e.target.innerHTML == 1)
+                offsetQueryValue = 0;
+            else
+                offsetQueryValue = 10 * e.target.innerHTML;
+            search();
+        })
 
         function getValue() {
             return ($('#searchOntology').search('get value'));
@@ -411,7 +441,7 @@
                 " PREFIX  afn:  <http://jena.apache.org/ARQ/function#> " +
                 " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
                 " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-                " SELECT DISTINCT ?subject ?label ?comment ?g ?name	 " +
+                " SELECT DISTINCT ?subject (afn:localname(?subject) as ?localname) ?label ?comment ?g ?name	 " +
                 "  WHERE { GRAPH ?g { { ?subject ?p ?o ." +
                 "  OPTIONAL{?subject rdfs:label ?label .} " +
                 "  OPTIONAL{?subject rdfs:comment ?comment .} " +
