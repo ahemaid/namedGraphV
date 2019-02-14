@@ -27,13 +27,13 @@
             <div class="item">
                 <img src="/images/logo2.png">
             </div>
-            <a class="item">
+            <a href="/" class="item">
                 Home
             </a>
             <a class="item">
                 Ontologies
             </a>
-            <a class="item ">
+            <a href="./search" class="item ">
                 Search
             </a>
             <div class="right menu">
@@ -45,73 +45,89 @@
         </div>
     </div>
     </div>
-    <div class="ui container">
-        <div class="ui menu">
-            <div class="item">
-                <div class="ui icon input">
-                    <input id="searchConcept" type="text" placeholder="Search...">
-                    <i class="search icon"></i>
+    <div class="ui grid">
+        <div class="ui container">
+
+            <div class="ui three item  menu" style="margin-top: 1%;">
+                <div class="item">
+                    <label class="ui teal button" style="    margin-left: 1%;">
+                        Term
+                    </label>
+                    <div id="listConceptOnSearch" class="ui fluid category search">
+                        <div class="ui  transparent action  input">
+                            <input id="searchConcept" class="prompt" type="text" placeholder="Search...">
+                            <i class="search icon"></i>
+                        </div>
+                        <div class="results" style="width: fit-content;"></div>
+                    </div>
+                </div>
+                <div id="foundResultItem" class="middle item" style="display:none">
+                    The found result
+                    <a id="countOfFoundResult" class="ui purple circular label"> </a>
+                </div>
+
+                <div class="right item">
+                    <div class="ui transparent action input">
+                        <input type="text" placeholder="Navigate to...">
+                    </div>
+                    <div class="ui teal button" style="    margin-right: 1%;">Go</div>
+
                 </div>
             </div>
-            <div class="right item">
-                <div class="ui action input">
-                    <input type="text" placeholder="Navigate to...">
-                    <div class="ui button">Go</div>
+            <div class="ui grid">
+
+                <table id="conceptsTable" class="ui celled table" style="margin-bottom: 5%; display:none; margin-top: 1%;">
+                    <tbody id="bodyOfTable" class="">
+
+                    </tbody>
+                    <tfoot id="footTable" class="" style="display:none">
+                        <tr class="">
+                            <th colSpan="3" class="">
+                                <div id="pagination" class="ui pagination right floated menu"></div>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+            <div class="ui bottom fixed inverted  menu">
+                <a class="item">
+                    Data Protection
+                </a>
+                <a class="item">
+                    Imprint
+                </a>
+                <div class="middle menu">
+                    <a href="https://vocol.iais.fraunhofer.de/" class="item">&copy; 2019 vocol.iais.fraunhofer.de</a>
+                </div>
+
+                <div class=" big right menu">
+                    <div class="item">
+                        <a href="https://github.com/vocol/vocol"> <i class="teal github icon"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="ui grid">
-
-        <table id="conceptsTable" class="ui celled table" style="margin-bottom: 5%; display:none">
-            <tbody id="bodyOfTable" class="">
-
-            </tbody>
-            <tfoot id="footTable" class="" style="display:none">
-                <tr class="">
-                    <th colSpan="3" class="">
-                        <div id="pagination" class="ui pagination right floated menu"></div>
-                    </th>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-</div>
-
-    <div class="ui bottom fixed inverted  menu">
-        <a class="item">
-            Data Protection
-        </a>
-        <a class="item">
-            Imprint
-        </a>
-        <div class="middle menu">
-            <a href="https://vocol.iais.fraunhofer.de/" class="item">&copy; 2019 vocol.iais.fraunhofer.de</a>
-        </div>
-
-        <div class=" big right menu">
-            <div class="item">
-                <a href="https://github.com/vocol/vocol"> <i class="teal github icon"></i></a>
+            <div id="coverScreen" class="LockOn" style=" display: none;">
             </div>
         </div>
-    </div>
-    <div id="coverScreen" class="LockOn" style=" display: none;">
-    </div>
+
 </body>
 
 </html>
 
-< <style>
+<style>
     .ui.menu .item>img:not(.ui) {
-    width: 3.5em;
+        width: 3.5em;
     }
 
     .ui.menu {
-    font-size: 1.2rem;
+        font-size: 1.2rem;
     }
 
     i.icon,
     i.icons {
-    font-size: 2em;
+        font-size: 2em;
     }
 
     /* .ui.card,
@@ -119,350 +135,494 @@
     width: auto;
     margin-top: 40px;
     } */
-    </style>
-    <script>
-        if (<%- JSON.stringify(searchTerm)%>) {
-            //$('#searchConcept').keyup();
-            //$('#searchConcept').text(<%- JSON.stringify(searchTerm) %>);
-            search(<%- JSON.stringify(searchTerm) %>);
-            //$('#searchConcept').bind('keyup', search);
+</style>
+<script>
+    if (<%- JSON.stringify(searchTerm)%>) {
+        //$('#searchConcept').keyup();
+        //$('#searchConcept').text(<%- JSON.stringify(searchTerm) %>);
+        search(<%- JSON.stringify(searchTerm) %>);
+        //$('#searchConcept').bind('keyup', search);
 
-            //alert(<%- JSON.stringify(searchTerm) %>)
+        //alert(<%- JSON.stringify(searchTerm) %>)
+
+    }
+    // $('#example').DataTable();
+
+    var limitQueryValue = 10;
+    var offsetQueryValue = 0;
+    var Statistics = "";
+    var selectedOntology = "";
+    var graphListsWithBranches = [];
+
+    $("#coverScreen").show();
+
+
+    // // query to find all the named graphs in SPARQL-endpoint
+    var allNamedGraphsQuery = 'SELECT DISTINCT ?g ' +
+        'WHERE {' +
+        '  GRAPH ?g { ?s ?p ?o }' +
+        '}';
+    var url = "http://localhost:3030/dataset/sparql"
+    var endpoint = url + "?query="
+    $.ajax({
+        type: 'GET',
+        url: endpoint + allNamedGraphsQuery,
+        headers: {
+            Accept: 'application/sparql-results+json;charset=UTF-8'
+        },
+        success: function (data, response, jqXHR) {
+            // Show the HTML for the Google homepage.
+            if (data != null) {
+                var graphs = data.results.bindings;
+                var graphLists = [];
+                if (graphs[0] != null) {
+                    for (var i = 0; i < graphs.length; i++) {
+                        if (graphs[i]["g"].value) {
+                            var stingIncludesInstace = graphs[i]["g"].value.split("dataset/")[1];
+                            var instanceName = stingIncludesInstace.split('/')[0];
+                            var stingIncludesBranch = graphs[i]["g"].value.split(instanceName + "/")[
+                                1];
+                            var branchName = stingIncludesBranch.split('/')[0];
+                            graphLists.push({
+                                "title": instanceName
+                            });
+                            graphListsWithBranches.push({
+                                "instance": instanceName,
+                                "branch": branchName
+
+                            });
+                        }
+
+                    }
+                    graphLists = Array.from(new Set(graphLists.map(JSON.stringify))).map(JSON.parse);
+                    graphListsWithBranches = Array.from(new Set(graphListsWithBranches.map(JSON.stringify)))
+                        .map(JSON.parse);
+
+                    $('#searchOntology')
+                        .search({
+                            type: 'standard',
+                            source: graphLists
+                        });
+                    $("#coverScreen").hide();
+                }
+            } else {
+                // console.log(response)
+                console.warn(response);
+            }
+        }
+    });
+
+    // looking for an ontology 
+    $("#listConceptOnSearch").on("click", function () {
+        var selectedTerm = "";
+        selectedTerm = getValue();
+        if (selectedTerm.trim()) {
+            offsetQueryValue = 0;
+            search(selectedTerm)
 
         }
-        // $('#example').DataTable();
 
-        var limitQueryValue = 10;
-        var offsetQueryValue = 0;
-        var Statistics = "";
-        var selectedOntology = "";
-        var graphListsWithBranches = [];
+    });
 
-        // string to hold table content
-        Statistics += '<tr><td class="td_content"> Classes</td><td class="right aligned">' +
-            "1000" + '</td></tr>';
-        Statistics += '<tr><td class="td_content"> RDF Properties </td><td class="right aligned">' +
-            "80" +
-            '</td></tr>';
-        Statistics += '<tr><td class="td_content"> OWL ObjectProperties	 </td><td class="right aligned">' +
-            "66" +
-            '</td></tr>';
-        Statistics += '<tr><td class="td_content"> OWL DatatypeProperties	 </td><td class="right aligned">' +
-            "5" + '</td></tr>'
-        Statistics += '<tr><td class="td_content"> OWL AnnotationProperties	 </td><td class="right aligned">' +
-            "55" + '</td></tr>'
-        Statistics += '<tr><td class="td_content"> Individuals	 </td><td class="right aligned">' +
-            "12" + '</td></tr>';
+    // hide footTable 
+    $("#footTable").hide();
+    $("#pagination").html("");
+    $('#conceptsTable').hide();
 
+    // $('listConceptOnSearch')
+    //     .search({
+    //         type:   'standard',
+    //         source: [],
+    //         searchFields: ['title'],
+    //     });
 
-        // $("#response").append(Metadata);
-        // $("#metaData").append(Statistics);
+    // looking for a concept 
+    function search(str) {
+        //searchString = $('#searchConcept').val();
 
-        $("#coverScreen").show();
-
-
-        // // query to find all the named graphs in SPARQL-endpoint
-        var allNamedGraphsQuery = 'SELECT DISTINCT ?g ' +
-            'WHERE {' +
-            '  GRAPH ?g { ?s ?p ?o }' +
-            '}';
-        var url = "http://localhost:3030/dataset/sparql"
-        var endpoint = url + "?query="
+        // get the search string from the inputbox 
+        //if (searchString.length > 2) {
+        //ajax call to get the count of found result
         $.ajax({
             type: 'GET',
-            url: endpoint + allNamedGraphsQuery,
+            url: endpoint + encodeURIComponent(countOfSearchedConcept(str)),
             headers: {
                 Accept: 'application/sparql-results+json;charset=UTF-8'
             },
             success: function (data, response, jqXHR) {
                 // Show the HTML for the Google homepage.
                 if (data != null) {
-                    var graphs = data.results.bindings;
-                    var graphLists = [];
-                    if (graphs[0] != null) {
-                        for (var i = 0; i < graphs.length; i++) {
-                            if (graphs[i]["g"].value) {
-                                var stingIncludesInstace = graphs[i]["g"].value.split("dataset/")[1];
-                                var instanceName = stingIncludesInstace.split('/')[0];
-                                var stingIncludesBranch = graphs[i]["g"].value.split(instanceName + "/")[
-                                    1];
-                                var branchName = stingIncludesBranch.split('/')[0];
-                                graphLists.push({
-                                    "title": instanceName
-                                });
-                                graphListsWithBranches.push({
-                                    "instance": instanceName,
-                                    "branch": branchName
+                    var count = data.results.bindings;
+                    var pagination = "";
+                    $("#pagination").html(pagination);
+                    pagination =
+                        '<a class="icon item"><i aria-hidden="true" class="chevron left icon"></i></a>';
+                    for (var j = 1; j < Math.ceil(count[0]["count"].value / 10); j++)
+                        pagination += '<a class="item">' + j + '</a>';
+                    pagination +=
+                        '<a class="icon item"><i aria-hidden="true" class="chevron right icon"></i></a>';
 
-                                });
+
+
+                    // ajax call to return found result 
+                    $.ajax({
+                        type: 'GET',
+                        url: endpoint + encodeURIComponent(searchedConcepts(str)),
+                        headers: {
+                            Accept: 'application/sparql-results+json;charset=UTF-8'
+                        },
+                        success: function (data, response, jqXHR) {
+                            // Show the HTML for the Google homepage.
+                            if (data != null) {
+                                var concepts = data.results.bindings;
+                                //console.log(concepts);
+                                var conceptLists = [];
+                                var conceptListDetails = [];
+                                if (concepts[0] != null) {
+                                    for (var i = 0; i < concepts.length; i++) {
+                                        if (concepts[i]["g"].value) {
+                                            // conceptLists.push({
+                                            //     "title": concepts[i]["name"].value
+                                            // });
+                                            var comment = (concepts[i].hasOwnProperty(
+                                                    "comment")) ?
+                                                concepts[i]["comment"].value :
+                                                ""
+                                            var label = (concepts[i].hasOwnProperty(
+                                                    "label")) ?
+                                                concepts[i]["label"].value : ""
+                                            conceptListDetails.push({
+                                                "subject": concepts[i][
+                                                    "subject"
+                                                ].value,
+                                                "graph": concepts[i][
+                                                    "g"
+                                                ].value,
+                                                "label": label,
+                                                "comment": comment,
+                                                "localname": concepts[i][
+                                                    "localname"
+                                                ].value
+                                            });
+                                        }
+                                        // }
+                                        // var listItems = function () {
+                                        //     var string = "";
+                                        //     conceptListDetails.forEach(element => {
+                                        //         let stingIncludesInstace = element.graph.split(
+                                        //             "dataset/")[1];
+                                        //         let instanceName = stingIncludesInstace.split(
+                                        //             '/')[0];
+                                        //         let stingIncludesBranch = element.graph.split(
+                                        //             instanceName + "/")[
+                                        //             1];
+                                        //         let branchName = stingIncludesBranch.split('/')[
+                                        //             0];
+
+                                        //         string +=
+                                        //             // '<div class="item"><div class=" content"><i class="small blue  tint icon"></i><a href="' +
+                                        //             // document.URL+'/'+instanceName+'/'+branchName+'/'+element.name +'">' + element.name +
+                                        //             // '</a></div></div>'
+                                        //             '<div class="item"><div class=" content"><i class="small blue  tint icon"></i><a href="#" onclick="showAlert(event);return false;">' +
+                                        //             element.name +
+                                        //             '</a></div></div>'
+                                        //     });
+                                        //     return string;
+                                    }
+                                    $('#bodyOfTable').html("");
+
+                                    var bodyOfTableHTML =
+                                        '<tr class=""> <td class="">';
+                                    var isTablehasData = false;
+                                    for (key in conceptListDetails) {
+                                        isTablehasData = true;
+                                        bodyOfTableHTML +=
+                                            '<div class="ui segments">  <div class="ui blue segment"><a class="ui grey big ribbon label" style="margin-top: -1%; margin-bottom: 1%;">' +
+                                            conceptListDetails[key].localname + '</a>' +
+                                            '<br/><div class="ui purple horizontal label"> localName</div> ' +
+                                            conceptListDetails[key].localname +
+                                            '<br /><div class="ui purple horizontal label" style="margin-top: 2px;">URI</div> ' +
+                                            conceptListDetails[key].subject+'<a href=""><i class=" tags green large icon" style="padding-left: .4%;"></i></a>';
+
+                                        if (conceptListDetails[key].label)
+                                            bodyOfTableHTML +=
+                                            '<div class="ui secondary segment"><a class="ui teal ribbon label">rdfs:label</a>' +
+                                            conceptListDetails[key].label +
+                                            '</div>';
+                                        if (conceptListDetails[key].comment)
+                                            bodyOfTableHTML +=
+                                            '<div class="ui secondary segment"><a class="ui blue ribbon label">rdfs:comment</a>' +
+                                            conceptListDetails[key].comment +
+                                            '</div>';
+                                        bodyOfTableHTML +=
+                                            '</div></div></div>';
+                                    }
+                                    bodyOfTableHTML +=
+                                        '<div class="hr"></div></td></tr>';
+                                    // console.log(conceptListDetails);
+
+                                    // show the content of the table
+                                    if (isTablehasData) {
+                                        $('#conceptsTable').show();
+                                        $('#bodyOfTable').append(bodyOfTableHTML);
+                                        isTablehasData = false;
+                                    } else {
+                                        $('#conceptsTable').hide();
+                                        $('#bodyOfTable').html("");
+                                    }
+                                    // show number of pages of the current table 
+                                    if (Math.ceil(count[0]["count"].value) > 0) {
+                                        $("#countOfFoundResult").text(Math.ceil(count[0]
+                                            [
+                                                "count"
+                                            ].value));
+                                        $("#foundResultItem").show();
+
+                                        if (Math.ceil(count[0]["count"].value) > 10) {
+                                            $("#footTable").show();
+                                            $("#pagination").append(pagination);
+                                        } else {
+                                            $("#footTable").hide();
+                                            $("#pagination").html("");
+                                        }
+                                    } else {
+                                        $("#foundResultItem").hide();
+
+                                    }
+
+                                } else {
+                                    $('#conceptsTable').hide();
+                                    $('#bodyOfTable').html("");
+                                    $("#footTable").hide();
+                                    $("#pagination").html("");
+                                    $("#foundResultItem").hide();
+
+                                }
+                            } else {
+
+                                console.warn(response);
                             }
-
                         }
-                        graphLists = Array.from(new Set(graphLists.map(JSON.stringify))).map(JSON.parse);
-                        graphListsWithBranches = Array.from(new Set(graphListsWithBranches.map(JSON.stringify)))
-                            .map(JSON.parse);
-
-                        $('#searchOntology')
-                            .search({
-                                source: graphLists
-                            });
-                        $("#coverScreen").hide();
-                    }
-                } else {
-                    // console.log(response)
-                    console.warn(response);
+                    });
                 }
             }
         });
+    };
 
-        // looking for an ontology 
-        $("#searchOntology").on("click", function () {
-            selectedOntology = getValue();
-            console.log(selectedOntology);
-        });
-
-        // hide footTable 
+    // check search input on keyup
+    $('#searchConcept').on('keyup', function () {
+        $('#conceptsTable').hide();
+        $('#bodyOfTable').html("");
         $("#footTable").hide();
         $("#pagination").html("");
-        $('#conceptsTable').hide();
+        $("#foundResultItem").hide();
+    });
 
-        // looking for a concept 
-        function search(str) {
-            // var searchString = "";
-            // if (str)
-            //     searchString = str
-            // else
-            searchString = $('#searchConcept').val();
-            if (searchString.length > 2) {
-                //ajax call to get the count of found result
-                $.ajax({
-                    type: 'GET',
-                    url: endpoint + encodeURIComponent(countOfSearchedConcept(searchString)),
-                    headers: {
-                        Accept: 'application/sparql-results+json;charset=UTF-8'
-                    },
-                    success: function (data, response, jqXHR) {
-                        // Show the HTML for the Google homepage.
-                        if (data != null) {
-                            var count = data.results.bindings;
-                            var pagination = "";
-                            $("#pagination").html(pagination);
-                            pagination =
-                                '<a class="icon item"><i aria-hidden="true" class="chevron left icon"></i></a>';
-                            for (var j = 1; j < Math.ceil(count[0]["count"].value / 10); j++)
-                                pagination += '<a class="item">' + j + '</a>';
-                            pagination +=
-                                '<a class="icon item"><i aria-hidden="true" class="chevron right icon"></i></a>';
+    $('#pagination').on('click', function (e) {
+        // alert(e.target.innerHTML)
+        if (e.target.innerHTML == 1)
+            offsetQueryValue = 0;
+        else
+            offsetQueryValue = 10 * e.target.innerHTML;
+        search();
+    })
 
+    function getValue() {
+        return ($('#listConceptOnSearch').search('get value'));
+    }
 
+    // function takeMeToTheOntology() {
+    //     if (selectedOntology) {
+    //         console.log(JSON.stringify(graphListsWithBranches));
+    //         var availableBranch = '';
+    //         // iterate over each element in the array
+    //         for (var i = 0; i < graphListsWithBranches.length; i++) {
+    //             // look for the entry with a matching `code` value
+    //             if (graphListsWithBranches[i].instance == selectedOntology) {
+    //                 availableBranch = graphListsWithBranches[i].branch;
+    //                 break;
+    //             }
+    //         }
+    //         window.location.href = document.URL.split('#')[0] + 'documentation/' + selectedOntology + '/' +
+    //             availableBranch;
+    //     }
+    // }
 
-                            // ajax call to return found result 
-                            $.ajax({
-                                type: 'GET',
-                                url: endpoint + encodeURIComponent(searchedConcepts(searchString)),
-                                headers: {
-                                    Accept: 'application/sparql-results+json;charset=UTF-8'
-                                },
-                                success: function (data, response, jqXHR) {
-                                    // Show the HTML for the Google homepage.
-                                    if (data != null) {
-                                        var concepts = data.results.bindings;
-                                        console.log(concepts);
-                                        var conceptLists = [];
-                                        var conceptListDetails = [];
-                                        if (concepts[0] != null) {
-                                            for (var i = 0; i < concepts.length; i++) {
-                                                if (concepts[i]["g"].value) {
-                                                    // conceptLists.push({
-                                                    //     "title": concepts[i]["name"].value
-                                                    // });
-                                                    var comment = (concepts[i].hasOwnProperty(
-                                                            "comment")) ?
-                                                        concepts[i]["comment"].value :
-                                                        ""
-                                                    var label = (concepts[i].hasOwnProperty(
-                                                            "label")) ?
-                                                        concepts[i]["label"].value : ""
-                                                    conceptListDetails.push({
-                                                        "subject": concepts[i][
-                                                            "subject"
-                                                        ].value,
-                                                        "graph": concepts[i][
-                                                            "g"
-                                                        ].value,
-                                                        "label": label,
-                                                        "comment": comment, 
-                                                        "localname": concepts[i]["localname"].value
-                                                    });
-                                                }
-                                                // }
-                                                // var listItems = function () {
-                                                //     var string = "";
-                                                //     conceptListDetails.forEach(element => {
-                                                //         let stingIncludesInstace = element.graph.split(
-                                                //             "dataset/")[1];
-                                                //         let instanceName = stingIncludesInstace.split(
-                                                //             '/')[0];
-                                                //         let stingIncludesBranch = element.graph.split(
-                                                //             instanceName + "/")[
-                                                //             1];
-                                                //         let branchName = stingIncludesBranch.split('/')[
-                                                //             0];
+    //test function
+    // function showAlert(e) {
+    //     alert(e.target.innerHTML)
+    //     e.preventDefault();
 
-                                                //         string +=
-                                                //             // '<div class="item"><div class=" content"><i class="small blue  tint icon"></i><a href="' +
-                                                //             // document.URL+'/'+instanceName+'/'+branchName+'/'+element.name +'">' + element.name +
-                                                //             // '</a></div></div>'
-                                                //             '<div class="item"><div class=" content"><i class="small blue  tint icon"></i><a href="#" onclick="showAlert(event);return false;">' +
-                                                //             element.name +
-                                                //             '</a></div></div>'
-                                                //     });
-                                                //     return string;
-                                            }
-                                            $('#bodyOfTable').html("");
+    // }
 
-                                            var bodyOfTableHTML =
-                                                '<tr class=""> <td class="">';
-                                            var isTablehasData = false;
-                                            for (key in conceptListDetails) {
-                                                isTablehasData = true;
-                                                bodyOfTableHTML +=
-                                                    '<div class="ui segments">  <div class="ui blue segment"><a class="ui grey big ribbon label" style="margin-top: -1%; margin-bottom: 1%;">'+conceptListDetails[key].localname+'</a>' +
-                                                    '<br/><div class="ui purple horizontal label"> localName</div> ' +
-                                                    conceptListDetails[key].localname+
-                                                    '<br /><div class="ui purple horizontal label" style="margin-top: 2px;">URI</div> ' +
-                                                    conceptListDetails[key].subject ;
+    // $('#listConceptOnSearch')
+    //                         .search({
+    //                             type:   'standard',
+    //                             source: findConceptsList(),     
+    //                             searchFields: ['title'],
 
-                                                if (conceptListDetails[key].label)
-                                                    bodyOfTableHTML +=
-                                                    '<div class="ui secondary segment"><a class="ui teal ribbon label">rdfs:label</a>' +
-                                                    conceptListDetails[key].label +
-                                                    '</div>';
-                                                if (conceptListDetails[key].comment)
-                                                    bodyOfTableHTML +=
-                                                    '<div class="ui secondary segment"><a class="ui blue ribbon label">rdfs:comment</a>' +
-                                                    conceptListDetails[key].comment +
-                                                    '</div>';
-                                                bodyOfTableHTML +=
-                                                    '</div></div></div>';
-                                            }
-                                            bodyOfTableHTML +=
-                                                '<div class="hr"></div></td></tr>';
-                                            console.log(conceptListDetails);
+    // });
 
-                                            // show the content of the table
-                                            if (isTablehasData) {
-                                                $('#conceptsTable').show();
-                                                $('#bodyOfTable').append(bodyOfTableHTML);
-                                                isTablehasData = false;
-                                            }
-                                            else{
-                                                $('#conceptsTable').hide();
-                                                $('#bodyOfTable').html("");
-                                            }
-                                            // show number of pages of the current table 
-                                            if (Math.ceil(count[0]["count"].value) > 10) {
-                                                $("#footTable").show();
-                                                $("#pagination").append(pagination);
-                                            }
-                                            else{
-                                                $("#footTable").hide();
-                                                $("#pagination").html("");
-                                            }
-                                        }
-                                        else{
-                                            $('#conceptsTable').hide();
-                                                $('#bodyOfTable').html("");
-                                                $("#footTable").hide();
-                                                $("#pagination").html("");
+    //     $('#listConceptOnSearch')
+    //   .search({
+    //     minCharacters : 3,
+    //     apiSettings   : {
+    //       url        : endpoint + encodeURIComponent(searchedConcepts($('#searchConcept').val())),
+    //       onResponse : function(theresponse) {
+    //          // here you modify theresponse object,
+    //          // then you return the modified version.
+    //          console.log(theresponse);
+    //          return theresponse
+    //       }
+    //    }
+    // source:[{
+    //     'title': 'adhdemm'},
+    //     {'title': 'ahed',
 
-                                        }
-                                    } else {
+    // }]
+    // });
 
-                                        console.warn(response);
-                                    }
-                                }
-                            });
-                        }
-                    }
-                });
+    // $('#listConceptOnSearch')
+    //     .search({
+    //         source: findConceptsList,
+    //         minCharacters: 2
 
-            } else {
-                $('.divided.list').html("");
-            }
+    //     })
 
-        };
+    // function findConceptsList(str) {
+    //     //searchString = $('#searchConcept').val();
+    //     //alert($('#searchConcept').val())
+    //     var conceptArray = [];
+    //     if ($('#searchConcept').search('get value').length > 0) {
 
-        // check search input on keyup
-        $('#searchConcept').on('keyup', search);
+    //         $.ajax({
+    //             type: 'GET',
+    //             url: endpoint + encodeURIComponent(searchedConcepts($('#searchConcept').val())),
+    //             headers: {
+    //                 Accept: 'application/sparql-results+json;charset=UTF-8'
+    //             },
+    //             success: function (data, response, jqXHR) {
+    //                 if (data != null) {
+    //                     var concepts = data.results.bindings;
+    //                     if (concepts[0] != null) {
+    //                         for (var i = 0; i < concepts.length; i++) {
+    //                             if (concepts[i]["localname"].value) {
+    //                                 conceptArray.push({
+    //                                     'title': concepts[i]["localname"].value
+    //                                 });
+    //                             }
+    //                         }
+    //                         conceptArray = Array.from(new Set(conceptArray.map(JSON.stringify))).map(JSON.parse);
+    //                         console.log(conceptArray);
+    //                         // $('#listConceptOnSearch')
+    //                         //     .search({
+    //                         //         source: conceptArray
+    //                         //     })
+    //                     }
+    //                 } else {
+    //                     console.warn(response);
+    //                 }
+    //             }
+    //         });
+    //     }
 
-        $('#pagination').on('click', function (e) {
-            // alert(e.target.innerHTML)
-            if (e.target.innerHTML == 1)
-                offsetQueryValue = 0;
-            else
-                offsetQueryValue = 10 * e.target.innerHTML;
-            search();
-        })
+    // }
 
-        function getValue() {
-            return ($('#searchOntology').search('get value'));
-        }
+    // // query to get searchedConcepts
+    // var searchedConcepts = function (searchedString) {
+    //     return ("PREFIX owl: <http://www.w3.org/2002/07/owl#> " +
+    //         " PREFIX  afn:  <http://jena.apache.org/ARQ/function#> " +
+    //         " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+    //         " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+    //         " SELECT DISTINCT ?subject (afn:localname(?subject) as ?localname) ?label ?comment ?g ?name	 " +
+    //         "  WHERE { GRAPH ?g { { ?subject ?p ?o ." +
+    //         "  OPTIONAL{?subject rdfs:label ?label .} " +
+    //         "  OPTIONAL{?subject rdfs:comment ?comment .} " +
+    //         "  FILTER(!isBlank(?subject)) FILTER(contains(afn:localname(?subject),\"" + searchedString +
+    //         "\"))}}} "
+    //         // "  bind(afn:localname(?s)	 as ?name)} }" +
+    //         +
+    //         "  limit " + limitQueryValue + "  OFFSET  " + offsetQueryValue
+    //     )
+    // }
+    // var currentSelectedTerm = "";
+    // var $searchedConceptsQueryString = "";
+    var searchMe = $('#searchConcept')
+    // var URL2 = "";
+    // $('#searchConcept').on('keyup', function () {
+    //     //    // var searchMe = $('#searchConcept')
+    //     if (searchMe[0].value) {
+    //         $searchedConceptsQueryString = encodeURIComponent(searchedConcepts());
+    //         //URL2 = endpoint + searchedConceptsQueryString
+    //         console.log($searchedConceptsQueryString);
 
-        // function takeMeToTheOntology() {
-        //     if (selectedOntology) {
-        //         console.log(JSON.stringify(graphListsWithBranches));
-        //         var availableBranch = '';
-        //         // iterate over each element in the array
-        //         for (var i = 0; i < graphListsWithBranches.length; i++) {
-        //             // look for the entry with a matching `code` value
-        //             if (graphListsWithBranches[i].instance == selectedOntology) {
-        //                 availableBranch = graphListsWithBranches[i].branch;
-        //                 break;
-        //             }
-        //         }
-        //         window.location.href = document.URL.split('#')[0] + 'documentation/' + selectedOntology + '/' +
-        //             availableBranch;
-        //     }
-        // }
+    //     }
 
-        //test function
-        // function showAlert(e) {
-        //     alert(e.target.innerHTML)
-        //     e.preventDefault();
+    // })
 
-        // }
+    // query to get searchedConcepts
+    var searchedConcepts = function () {
+        //console.log("currentSelectedTerm"+ searchMe[0].value);
+        return ("PREFIX owl: <http://www.w3.org/2002/07/owl#> " +
+            " PREFIX  afn:  <http://jena.apache.org/ARQ/function#> " +
+            " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+            " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+            " SELECT DISTINCT ?subject (afn:localname(?subject) as ?localname) ?label ?comment ?g ?name	 " +
+            "  WHERE { GRAPH ?g { { ?subject ?p ?o ." +
+            "  OPTIONAL{?subject rdfs:label ?label .} " +
+            "  OPTIONAL{?subject rdfs:comment ?comment .} " +
+            "  FILTER(!isBlank(?subject)) FILTER(contains(afn:localname(?subject),\"" + searchMe[0].value +
+            "\"))}}} "
+            // "  bind(afn:localname(?s)	 as ?name)} }" +
+            +
+            "  limit " + limitQueryValue + "  OFFSET  " + offsetQueryValue
+        )
+    }
+
+    // query to get searchedConcepts
+    var countOfSearchedConcept = function (searchedString) {
+
+        return (
+            " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>  PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  PREFIX owl:  <http://www.w3.org/2002/07/owl#>  PREFIX foaf: <http://xmlns.com/foaf/0.1/>  PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>  PREFIX  afn:  <http://jena.apache.org/ARQ/function#> " +
+            " SELECT (count(?s) as ?count) where { " +
+            " SELECT  DISTINCT ?s ?label  ?comment ?g  WHERE {   GRAPH ?g { { " +
+            " ?s ?p ?o . " +
+            "    OPTIONAL{?s rdfs:label ?label .} " +
+            "          OPTIONAL{?s rdfs:comment ?comment .}" +
+            "  FILTER(!isBlank(?s)) FILTER(contains(afn:localname(?s),\"" + searchedString + "\") )}  " +
+            "}}}")
+    };
 
 
 
-        // query to get searchedConcepts
-        var searchedConcepts = function (searchedString) {
-            return ("PREFIX owl: <http://www.w3.org/2002/07/owl#> " +
-                " PREFIX  afn:  <http://jena.apache.org/ARQ/function#> " +
-                " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-                " SELECT DISTINCT ?subject (afn:localname(?subject) as ?localname) ?label ?comment ?g ?name	 " +
-                "  WHERE { GRAPH ?g { { ?subject ?p ?o ." +
-                "  OPTIONAL{?subject rdfs:label ?label .} " +
-                "  OPTIONAL{?subject rdfs:comment ?comment .} " +
-                "  FILTER(!isBlank(?subject)) FILTER(contains(afn:localname(?subject),\"" + searchedString +
-                "\"))}}} "
-                // "  bind(afn:localname(?s)	 as ?name)} }" +
-                +
-                "  limit " + limitQueryValue + "  OFFSET  " + offsetQueryValue
-            )
-        }
-
-        // query to get searchedConcepts
-        var countOfSearchedConcept = function (searchedString) {
-            return (
-                " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>  PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  PREFIX owl:  <http://www.w3.org/2002/07/owl#>  PREFIX foaf: <http://xmlns.com/foaf/0.1/>  PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>  PREFIX  afn:  <http://jena.apache.org/ARQ/function#> " +
-                " SELECT (count(?s) as ?count) where { " +
-                " SELECT  DISTINCT ?s ?label  ?comment ?g  WHERE {   GRAPH ?g { { " +
-                " ?s ?p ?o . " +
-                "    OPTIONAL{?s rdfs:label ?label .} " +
-                "          OPTIONAL{?s rdfs:comment ?comment .}" +
-                "  FILTER(!isBlank(?s)) FILTER(contains(afn:localname(?s),\"" + searchedString + "\") )}  " +
-                "}}}")
-        };
-    </script>
+    $('#listConceptOnSearch')
+        .search({
+            minCharacters: 3,
+            searchOnFocus: false,
+            searchDelay: 500,
+            apiSettings: {
+                beforeSend: function (settings) {
+                    settings.type = 'GET';
+                    settings.url = endpoint + encodeURIComponent(searchedConcepts(searchMe[0].value));
+                    settings.Accept = "application/sparql-results+json;charset=UTF-8";
+                    settings.dataType = "json";
+                    return settings;
+                },
+                onResponse: function (response) {
+                    var convertedResponse = {
+                        results: []
+                    };
+                    var data = response.results.bindings;
+                    // translate response to work with search
+                    $.each(data, function (index, item) {
+                        // add result to category
+                        convertedResponse.results.push({
+                            title: item.localname.value,
+                            //description: item.onekey_id,
+                        });
+                    });
+                    return convertedResponse;
+                },
+            },
+        });
+</script>

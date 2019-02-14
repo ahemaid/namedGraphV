@@ -27,13 +27,13 @@
             <div class="item">
                 <img src="/images/logo2.png">
             </div>
-            <a class="item">
+            <a href="/" class="item">
                 Home
             </a>
             <a class="item">
                 Ontologies
             </a>
-            <a class="item ">
+            <a href="./search" class="item ">
                 Search
             </a>
             <div class="right menu">
@@ -99,7 +99,7 @@
                     </div>
                     <div class="content">
                         <div class="ui large feed">
-                            <div id="searchOntology" class="ui fluid   search">
+                            <div id="searchOntology" class="ui fluid search">
                                 <div class="ui icon input">
                                     <input class="prompt" type="text" placeholder="Find an ontology..." style="width: 520px">
                                     <i class="search icon"></i>
@@ -240,6 +240,11 @@
                 }
             } else {
                 // console.log(response)
+
+                $('#searchOntology')
+                        .search({
+                            source: []
+                        });
                 console.warn(response);
             }
         }
